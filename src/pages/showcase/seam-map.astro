@@ -1,0 +1,285 @@
+---
+import DemoLayout from '../../layouts/DemoLayout.astro';
+
+const custodians = [
+  { id: 'c1', name: 'Sourcing', owner: 'Recruiter' },
+  { id: 'c2', name: 'Selection', owner: 'Hiring manager' },
+  { id: 'c3', name: 'Offer', owner: 'HR operations' },
+  { id: 'c4', name: 'Onboarding', owner: 'Onboarding lead' },
+  { id: 'c5', name: 'Team', owner: 'Line manager' },
+];
+
+const seams = [
+  {
+    id: 's1',
+    between: 'Sourcing → Selection',
+    lost: 'The recruiter knows the candidate asked for interview questions in advance, and that it changed their performance materially. That context does not travel with the CV.',
+    failure: 'The hiring manager assesses an unprepared performance as a capability signal rather than a process artefact.',
+    fix: 'A structured handover field capturing agreed process adjustments, transferred with consent at the level the candidate approved.',
+  },
+  {
+    id: 's2',
+    between: 'Selection → Offer',
+    lost: 'Commitments made verbally in interview — a phased start, a written brief format, a quiet workspace — sit in the hiring manager\'s memory rather than in the record.',
+    failure: 'The offer letter contains none of it. The new joiner arrives to discover the terms they accepted were informal.',
+    fix: 'Adjustment commitments captured at decision point and carried into offer documentation, not reconstructed later from recollection.',
+  },
+  {
+    id: 's3',
+    between: 'Offer → Onboarding',
+    lost: 'Documented adjustments exist but sit in a recruitment system the onboarding lead does not open.',
+    failure: 'Week one is set up to a default template. The new joiner has to re-request everything they already negotiated, from a position of far less leverage.',
+    fix: 'A named custodian accountable for the transfer itself — not the sender, not the receiver — with a single structured prompt at the receiving end.',
+  },
+  {
+    id: 's4',
+    between: 'Onboarding → Team',
+    lost: 'Onboarding knows what was agreed. The team the person actually works with day to day was never part of the conversation.',
+    failure: 'Practices lapse within a fortnight. The manager reverts to verbal briefings because that is what the team has always done.',
+    fix: 'Universal-design defaults adopted at team level, so the practice does not depend on anyone remembering an individual arrangement.',
+  },
+];
+---
+
+<DemoLayout slug="seam-map">
+  <div class="seam-demo">
+    <div class="demo-head">
+      <h2>Inclusive hiring — custodian chain</h2>
+      <p class="text-muted text-small">
+        Select a handoff to see what gets lost, how it fails, and what closes it.
+      </p>
+    </div>
+
+    <div class="chain" role="group" aria-label="Custodian chain">
+      {
+        custodians.map((c, i) => (
+          <>
+            <div class="node">
+              <span class="node-name">{c.name}</span>
+              <span class="node-owner">{c.owner}</span>
+            </div>
+            {i < seams.length && (
+              <button
+                type="button"
+                class="seam-btn"
+                data-seam={seams[i].id}
+                aria-pressed="false"
+                aria-label={`Handoff: ${seams[i].between}`}
+              >
+                <span class="seam-line" aria-hidden="true"></span>
+                <span class="seam-dot" aria-hidden="true"></span>
+              </button>
+            )}
+          </>
+        ))
+      }
+    </div>
+
+    <div class="seam-detail" data-detail aria-live="polite">
+      <div class="detail-empty" data-empty>
+        <p>Select any handoff on the chain above.</p>
+        <p class="text-small text-muted">
+          Every node here may be fully committed to inclusive practice. The failure still happens —
+          because commitment sits with individuals while context is lost in transfer.
+        </p>
+      </div>
+
+      {
+        seams.map((s) => (
+          <div class="detail-card" data-detail-for={s.id} hidden>
+            <h3>{s.between}</h3>
+            <div class="detail-grid">
+              <div class="detail-block">
+                <span class="detail-label">What gets lost</span>
+                <p>{s.lost}</p>
+              </div>
+              <div class="detail-block detail-fail">
+                <span class="detail-label">How it fails</span>
+                <p>{s.failure}</p>
+              </div>
+              <div class="detail-block detail-fix">
+                <span class="detail-label">What closes it</span>
+                <p>{s.fix}</p>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <p class="demo-foot text-small text-muted">
+      Stage metrics — time to hire, offer acceptance, ninety-day retention — are structurally
+      incapable of showing a handoff failure, because the failure occurs in whitespace nobody
+      instrumented. That is why organisations see the numbers decline without locating the cause.
+    </p>
+  </div>
+</DemoLayout>
+
+<style>
+  .demo-head { margin-bottom: 2.25rem; }
+  .demo-head h2 { font-size: 1.35rem; margin-bottom: 0.6rem; }
+
+  .chain {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 2.5rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .node {
+    flex: 0 0 auto;
+    min-width: 8.5rem;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--navy);
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+    text-align: left;
+  }
+
+  .node-name {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.2rem;
+  }
+  .node-owner { font-size: 0.76rem; color: var(--gray-600); }
+
+  .seam-btn {
+    flex: 1 1 2.5rem;
+    min-width: 2.5rem;
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .seam-line {
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    border-top: 2px dashed var(--gray-400);
+    transition: border-color 0.16s ease;
+  }
+
+  .seam-dot {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 13px; height: 13px;
+    margin: -6.5px 0 0 -6.5px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid var(--gray-400);
+    transition: all 0.16s ease;
+  }
+
+  .seam-btn:hover .seam-line,
+  .seam-btn[aria-pressed='true'] .seam-line { border-top-color: var(--teal); }
+
+  .seam-btn:hover .seam-dot { border-color: var(--teal); }
+  .seam-btn[aria-pressed='true'] .seam-dot {
+    background: var(--teal);
+    border-color: var(--teal);
+    transform: scale(1.25);
+  }
+
+  .seam-detail {
+    background: var(--gray-100);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    min-height: 12rem;
+  }
+
+  .detail-empty p:first-child {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.6rem;
+  }
+  .detail-empty p:last-child { max-width: 58ch; margin: 0; }
+
+  .detail-card h3 { font-size: 1.15rem; margin-bottom: 1.5rem; }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .detail-block {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gray-400);
+    border-radius: var(--radius);
+    padding: 1.15rem 1.25rem;
+  }
+  .detail-fail { border-left-color: #C25B4E; }
+  .detail-fix { border-left-color: var(--teal); }
+
+  .detail-label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-600);
+    margin-bottom: 0.6rem;
+  }
+  .detail-fix .detail-label { color: var(--teal-deep); }
+
+  .detail-block p { font-size: 0.87rem; line-height: 1.6; margin: 0; }
+
+  .demo-foot {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    max-width: 68ch;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 720px) {
+    .chain { flex-direction: column; gap: 0; }
+    .node { min-width: 0; width: 100%; }
+    .seam-btn { height: 2.75rem; width: 100%; flex: 0 0 2.75rem; }
+    .seam-line {
+      left: 50%; right: auto; top: 0; bottom: 0;
+      border-top: none;
+      border-left: 2px dashed var(--gray-400);
+    }
+    .seam-btn:hover .seam-line,
+    .seam-btn[aria-pressed='true'] .seam-line { border-left-color: var(--teal); }
+  }
+</style>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-seam]');
+  const empty = document.querySelector<HTMLElement>('[data-empty]');
+  const cards = document.querySelectorAll<HTMLElement>('[data-detail-for]');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.seam;
+      const already = btn.getAttribute('aria-pressed') === 'true';
+
+      buttons.forEach((b) => b.setAttribute('aria-pressed', 'false'));
+      cards.forEach((c) => (c.hidden = true));
+
+      if (already) {
+        if (empty) empty.hidden = false;
+        return;
+      }
+
+      btn.setAttribute('aria-pressed', 'true');
+      if (empty) empty.hidden = true;
+      const card = document.querySelector<HTMLElement>(`[data-detail-for="${id}"]`);
+      if (card) card.hidden = false;
+    });
+  });
+</script>

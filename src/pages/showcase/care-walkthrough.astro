@@ -1,0 +1,267 @@
+---
+import DemoLayout from '../../layouts/DemoLayout.astro';
+
+const options = [
+  {
+    id: 'o1',
+    say: '"Sure, no problem — I\'ll send you the details separately after."',
+    verdict: 'partial',
+    label: 'Well-meant, quietly costly',
+    outcome:
+      'The request is granted, and the colleague is now the only person receiving instructions in a different format from everyone else. The arrangement depends entirely on you remembering, every time. When you are on leave, it lapses.',
+    care: 'Acknowledge — met. Respect — partially. The response is warm but treats the need as an individual exception rather than a design signal.',
+    doLayer: 'Individual accommodation. Reactive, fragile, and dependent on one person\'s memory.',
+  },
+  {
+    id: 'o2',
+    say: '"Is there a reason the verbal run-through isn\'t working for you?"',
+    verdict: 'poor',
+    label: 'Reasonable-sounding, actually a demand',
+    outcome:
+      'The colleague now has to justify the request in front of the team, disclose more than they intended, or withdraw it. Most people withdraw it. You will not hear the request again — which will feel like it was resolved.',
+    care: 'Consider — missed. The question assumes the current format is the default and the request is the deviation requiring explanation.',
+    doLayer: 'No change made. The demand was never assessed; the person was.',
+  },
+  {
+    id: 'o3',
+    say: '"Good idea — I\'ll start posting the actions in writing after every stand-up so we\'ve all got them."',
+    verdict: 'strong',
+    label: 'Universal design default',
+    outcome:
+      'The colleague gets what they asked for without being marked out. Three other people quietly stop asking you to repeat things. The practice survives your absence because it belongs to the meeting, not to a person.',
+    care: 'Consider, Acknowledge and Respect all met. The need is treated as information about the process rather than about the individual.',
+    doLayer: 'Task redesign. The incidental demand — retaining verbal instruction under time pressure — was removed for everyone.',
+  },
+];
+---
+
+<DemoLayout slug="care-walkthrough">
+  <div class="walkthrough">
+    <div class="scenario">
+      <span class="scen-label">The scenario</span>
+      <p class="scen-text">
+        In a morning stand-up, a team member says: <em>&ldquo;Could I get the actions in writing
+        after these? I lose track when it&rsquo;s all verbal.&rdquo;</em> Three colleagues are
+        waiting to speak. The meeting is already four minutes over.
+      </p>
+      <p class="scen-sub text-small text-muted">
+        You have roughly two seconds. What do you say?
+      </p>
+    </div>
+
+    <div class="think-layer">
+      <span class="layer-key">Think</span>
+      <p>
+        Before choosing: the request is information about the process, not about the person. Notice
+        the instinct to treat it as a favour being asked.
+      </p>
+    </div>
+
+    <div class="options" role="group" aria-label="Response options">
+      {
+        options.map((o) => (
+          <button type="button" class="option" data-option={o.id} aria-pressed="false">
+            <span class="layer-key say-key">Say</span>
+            <span class="option-say">{o.say}</span>
+          </button>
+        ))
+      }
+    </div>
+
+    <div class="result" data-result aria-live="polite">
+      <p class="result-empty" data-result-empty>Choose a response to see how it plays out.</p>
+
+      {
+        options.map((o) => (
+          <div class="result-card" data-result-for={o.id} data-verdict={o.verdict} hidden>
+            <div class="result-head">
+              <span class="verdict-badge">{o.label}</span>
+            </div>
+            <div class="result-grid">
+              <div class="result-block">
+                <span class="result-label">What happens next</span>
+                <p>{o.outcome}</p>
+              </div>
+              <div class="result-block">
+                <span class="result-label">Against CARE</span>
+                <p>{o.care}</p>
+              </div>
+              <div class="result-block">
+                <span class="result-label">The &ldquo;Do&rdquo; layer</span>
+                <p>{o.doLayer}</p>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <p class="demo-foot text-small text-muted">
+      This is how a CARE behaviour is actually taught: a specific situation, the response options
+      genuinely available under time pressure, and what each one produces. Notice that the strongest
+      option is not the kindest-sounding one — it is the one that changes the design rather than
+      granting an exception.
+    </p>
+  </div>
+</DemoLayout>
+
+<style>
+  .scenario {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    margin-bottom: 1.25rem;
+  }
+
+  .scen-label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 0.9rem;
+  }
+
+  .scen-text {
+    font-family: var(--font-display);
+    font-size: clamp(1.02rem, 1.7vw, 1.2rem);
+    font-weight: 500;
+    line-height: 1.55;
+    color: var(--white);
+    margin-bottom: 0.85rem;
+  }
+  .scen-text em { color: var(--teal); font-style: normal; }
+
+  .scen-sub { color: var(--gray-400) !important; margin: 0; }
+
+  .think-layer {
+    background: var(--gray-100);
+    border-left: 3px solid var(--gray-400);
+    padding: 1.15rem 1.35rem;
+    margin-bottom: 1.75rem;
+  }
+  .think-layer p { font-size: 0.9rem; line-height: 1.6; margin: 0; color: var(--gray-600); }
+
+  .layer-key {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gray-600);
+    margin-bottom: 0.5rem;
+  }
+  .say-key { color: var(--teal-deep); }
+
+  .options { display: grid; gap: 0.85rem; margin-bottom: 1.75rem; }
+
+  .option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 1.15rem 1.35rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.16s ease, background-color 0.16s ease;
+  }
+  .option:hover { border-color: var(--gray-400); border-left-color: var(--teal); }
+  .option[aria-pressed='true'] {
+    border-left-color: var(--teal);
+    background: var(--teal-tint);
+  }
+
+  .option-say {
+    display: block;
+    font-size: 0.97rem;
+    line-height: 1.6;
+    color: var(--navy);
+  }
+
+  .result {
+    border-top: 1px solid var(--line);
+    padding-top: 1.75rem;
+    min-height: 8rem;
+  }
+
+  .result-empty {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    color: var(--gray-600);
+    margin: 0;
+  }
+
+  .result-head { margin-bottom: 1.35rem; }
+
+  .verdict-badge {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius);
+  }
+  [data-verdict='strong'] .verdict-badge { background: var(--teal); color: var(--navy); }
+  [data-verdict='partial'] .verdict-badge { background: #F2E3C4; color: #6B4E12; }
+  [data-verdict='poor'] .verdict-badge { background: #F3DAD6; color: #8A2D22; }
+
+  .result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .result-block {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.15rem 1.25rem;
+  }
+
+  .result-label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    margin-bottom: 0.6rem;
+  }
+  .result-block p { font-size: 0.87rem; line-height: 1.62; margin: 0; }
+
+  .demo-foot {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    max-width: 68ch;
+    line-height: 1.65;
+  }
+</style>
+
+<script>
+  const opts = document.querySelectorAll<HTMLButtonElement>('[data-option]');
+  const empty = document.querySelector<HTMLElement>('[data-result-empty]');
+  const cards = document.querySelectorAll<HTMLElement>('[data-result-for]');
+
+  opts.forEach((opt) => {
+    opt.addEventListener('click', () => {
+      const id = opt.dataset.option;
+      opts.forEach((o) => o.setAttribute('aria-pressed', 'false'));
+      cards.forEach((c) => (c.hidden = true));
+
+      opt.setAttribute('aria-pressed', 'true');
+      if (empty) empty.hidden = true;
+
+      const card = document.querySelector<HTMLElement>(`[data-result-for="${id}"]`);
+      if (card) card.hidden = false;
+    });
+  });
+</script>

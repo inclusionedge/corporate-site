@@ -1,0 +1,126 @@
+---
+import { journey } from '../data/journey';
+---
+
+<div class="rail">
+  {
+    journey.map((stage) => (
+      <article class="stage">
+        <div class="stage-head">
+          <span class="stage-num">{stage.num}</span>
+          <h3>{stage.name}</h3>
+        </div>
+
+        <div class="visible-card">
+          <span class="card-key">What you see</span>
+          <ul>
+            {stage.visible.map((v) => <li>{v}</li>)}
+          </ul>
+        </div>
+
+        <div class="connector" aria-hidden="true"><span></span></div>
+
+        <div class="seam-card">
+          <span class="card-key seam-key">In the seam</span>
+          <p>{stage.seam}</p>
+        </div>
+      </article>
+    ))
+  }
+</div>
+
+<style>
+  .rail {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.25rem;
+  }
+
+  .stage { display: flex; flex-direction: column; }
+
+  .stage-head {
+    border-top: 2px solid var(--navy);
+    padding-top: 0.9rem;
+    margin-bottom: 1.25rem;
+    min-height: 5.25rem;
+  }
+
+  .stage-num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--teal-deep);
+    margin-bottom: 0.4rem;
+  }
+
+  .stage-head h3 { font-size: 1.08rem; }
+
+  .visible-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.15rem 1.1rem;
+    flex: 1;
+  }
+
+  .card-key {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--gray-600);
+    margin-bottom: 0.7rem;
+  }
+
+  .seam-key { color: var(--teal-deep); }
+
+  .visible-card ul {
+    margin: 0;
+    padding-left: 1rem;
+    font-size: 0.84rem;
+    line-height: 1.55;
+  }
+  .visible-card li { margin-bottom: 0.4rem; }
+
+  .connector {
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .connector span {
+    width: 0;
+    height: 100%;
+    border-left: 2px dashed var(--teal);
+    opacity: 0.6;
+  }
+
+  .seam-card {
+    background: var(--teal-tint);
+    border: 1px dashed var(--teal);
+    border-radius: var(--radius);
+    padding: 1.15rem 1.1rem;
+    flex: 1;
+  }
+
+  .seam-card p {
+    font-size: 0.84rem;
+    line-height: 1.55;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  @media (max-width: 1080px) {
+    .rail { grid-template-columns: repeat(2, 1fr); gap: 2rem 1.25rem; }
+    .stage-head { min-height: 0; }
+  }
+
+  @media (max-width: 620px) {
+    .rail { grid-template-columns: 1fr; }
+    .connector { height: 22px; }
+  }
+</style>

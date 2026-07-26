@@ -1,0 +1,343 @@
+---
+import { site } from '../data/site';
+---
+
+<form class="enquiry-form" data-contact-form novalidate>
+  <input type="hidden" name="access_key" value={site.web3formsKey} />
+  <input type="hidden" name="subject" value="New enquiry via inclusionedge.co" />
+  <input type="hidden" name="from_name" value="InclusionEdge website" />
+
+  <!-- Honeypot: hidden from people, tempting to bots -->
+  <input
+    type="checkbox"
+    name="botcheck"
+    class="hp-field"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+  />
+
+  <div class="field">
+    <label for="cf-name">Name <span aria-hidden="true">*</span></label>
+    <input type="text" id="cf-name" name="name" required autocomplete="name" />
+  </div>
+
+  <div class="field">
+    <label for="cf-email">Work email <span aria-hidden="true">*</span></label>
+    <input type="email" id="cf-email" name="email" required autocomplete="email" />
+  </div>
+
+  <div class="field">
+    <label for="cf-org">Organisation <span class="optional">(optional)</span></label>
+    <input type="text" id="cf-org" name="organisation" autocomplete="organization" />
+  </div>
+
+  <div class="field">
+    <label for="cf-message">Message <span aria-hidden="true">*</span></label>
+    <textarea id="cf-message" name="message" rows="6" required
+      placeholder="What&rsquo;s prompting the enquiry — a specific team, a recent situation, or a broader capability gap?"></textarea>
+  </div>
+
+  <div class="consent">
+    <input type="checkbox" id="cf-consent" name="consent" required />
+    <label for="cf-consent">
+      I consent to InclusionEdge collecting and using the details above to respond to this
+      enquiry, in line with Singapore&rsquo;s Personal Data Protection Act. Your details are not
+      shared with third parties and are not used for marketing.
+    </label>
+  </div>
+
+  <button type="submit" class="btn btn-primary submit-btn" data-submit>
+    <span data-submit-label>Send enquiry</span>
+  </button>
+
+  <p class="form-note text-small text-muted">
+    Fields marked * are required. We aim to reply within two working days.
+  </p>
+</form>
+
+<!-- Toast confirmation -->
+<div class="toast" data-toast role="status" aria-live="polite" hidden>
+  <div class="toast-inner">
+    <div class="toast-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6 9 17l-5-5" />
+      </svg>
+    </div>
+    <div class="toast-body">
+      <p class="toast-title" data-toast-title>Enquiry sent</p>
+      <p class="toast-text" data-toast-text>
+        Thanks — that&rsquo;s landed with us. We aim to reply within two working days.
+      </p>
+    </div>
+    <button type="button" class="toast-close" data-toast-close aria-label="Dismiss notification">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" aria-hidden="true">
+        <path d="M18 6 6 18M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  .enquiry-form { max-width: 34rem; }
+
+  .hp-field {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    opacity: 0;
+    pointer-events: none;
+    left: -9999px;
+  }
+
+  .field { margin-bottom: 1.35rem; }
+
+  .field label,
+  .consent label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.45rem;
+  }
+
+  .field label span[aria-hidden] { color: var(--teal-deep); }
+  .optional { font-weight: 400; color: var(--gray-600); }
+
+  input[type='text'],
+  input[type='email'],
+  textarea {
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--ink);
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0.78rem 0.9rem;
+    transition: border-color 0.15s ease;
+  }
+
+  input:hover, textarea:hover { border-color: var(--gray-400); }
+  input:focus, textarea:focus { border-color: var(--teal-deep); }
+  textarea { resize: vertical; line-height: 1.6; }
+
+  input[aria-invalid='true'],
+  textarea[aria-invalid='true'] { border-color: #B4342B; }
+
+  .consent {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    margin-bottom: 1.6rem;
+  }
+
+  .consent input { margin-top: 0.3rem; flex-shrink: 0; width: 16px; height: 16px; accent-color: var(--teal-deep); }
+
+  .consent label {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--gray-600);
+    margin-bottom: 0;
+  }
+
+  .submit-btn { border: none; }
+  .submit-btn[disabled] { opacity: 0.6; cursor: wait; }
+
+  .form-note { margin-top: 1rem; }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    right: clamp(1rem, 3vw, 2rem);
+    bottom: clamp(1rem, 3vw, 2rem);
+    z-index: 200;
+    max-width: min(24rem, calc(100vw - 2rem));
+    animation: toast-in 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .toast[hidden] { display: none; }
+
+  .toast.is-leaving { animation: toast-out 0.22s ease forwards; }
+
+  .toast-inner {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    background: var(--navy);
+    color: var(--white);
+    border-radius: var(--radius);
+    border-left: 3px solid var(--teal);
+    padding: 1.05rem 1.1rem;
+    box-shadow: 0 12px 34px rgba(13, 27, 42, 0.26);
+  }
+
+  .toast-icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    color: var(--teal);
+    margin-top: 1px;
+  }
+  .toast-icon svg { width: 100%; height: 100%; }
+
+  .toast.is-error .toast-inner { border-left-color: #E0685C; }
+  .toast.is-error .toast-icon { color: #E0685C; }
+
+  .toast-body { flex: 1; }
+
+  .toast-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--white);
+    margin: 0 0 0.2rem;
+  }
+
+  .toast-text {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--gray-400);
+    margin: 0;
+  }
+
+  .toast-close {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--gray-400);
+    cursor: pointer;
+  }
+  .toast-close:hover { color: var(--white); }
+  .toast-close svg { width: 100%; height: 100%; }
+
+  @keyframes toast-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes toast-out {
+    to { opacity: 0; transform: translateY(10px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toast, .toast.is-leaving { animation: none; }
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const toast = document.querySelector<HTMLElement>('[data-toast]');
+  const toastTitle = document.querySelector<HTMLElement>('[data-toast-title]');
+  const toastText = document.querySelector<HTMLElement>('[data-toast-text]');
+  const closeBtn = document.querySelector<HTMLButtonElement>('[data-toast-close]');
+  const submitBtn = document.querySelector<HTMLButtonElement>('[data-submit]');
+  const submitLabel = document.querySelector<HTMLElement>('[data-submit-label]');
+
+  let hideTimer: number | undefined;
+
+  function showToast(title: string, text: string, isError = false) {
+    if (!toast || !toastTitle || !toastText) return;
+    window.clearTimeout(hideTimer);
+    toastTitle.textContent = title;
+    toastText.textContent = text;
+    toast.classList.toggle('is-error', isError);
+    toast.classList.remove('is-leaving');
+    toast.hidden = false;
+    hideTimer = window.setTimeout(hideToast, isError ? 9000 : 7000);
+  }
+
+  function hideToast() {
+    if (!toast || toast.hidden) return;
+    toast.classList.add('is-leaving');
+    window.setTimeout(() => {
+      toast.hidden = true;
+      toast.classList.remove('is-leaving');
+    }, 220);
+  }
+
+  closeBtn?.addEventListener('click', hideToast);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hideToast();
+  });
+
+  function validate(): boolean {
+    if (!form) return false;
+    let ok = true;
+    const required = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]');
+    required.forEach((el) => {
+      const valid =
+        el.type === 'checkbox' ? (el as HTMLInputElement).checked : el.value.trim() !== '' && el.checkValidity();
+      el.setAttribute('aria-invalid', valid ? 'false' : 'true');
+      if (!valid && ok) {
+        ok = false;
+        el.focus();
+      }
+    });
+    return ok;
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!validate()) {
+      showToast(
+        'Check the form',
+        'A few required fields still need completing before this can send.',
+        true
+      );
+      return;
+    }
+
+    const key = (form.querySelector('[name="access_key"]') as HTMLInputElement)?.value ?? '';
+    if (key.startsWith('YOUR-')) {
+      showToast(
+        'Form not connected yet',
+        'Add your Web3Forms access key in src/data/site.ts to start receiving enquiries.',
+        true
+      );
+      return;
+    }
+
+    if (submitBtn && submitLabel) {
+      submitBtn.disabled = true;
+      submitLabel.textContent = 'Sending…';
+    }
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        form.reset();
+        showToast(
+          'Enquiry sent',
+          'Thanks — that has landed with us. We aim to reply within two working days.'
+        );
+      } else {
+        throw new Error(data.message || 'Submission failed');
+      }
+    } catch {
+      showToast(
+        'Could not send',
+        `Something went wrong on the way. Please email us directly and we will pick it up from there.`,
+        true
+      );
+    } finally {
+      if (submitBtn && submitLabel) {
+        submitBtn.disabled = false;
+        submitLabel.textContent = 'Send enquiry';
+      }
+    }
+  });
+</script>

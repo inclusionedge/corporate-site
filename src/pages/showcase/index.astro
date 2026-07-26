@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { showcase } from '../../data/showcase';
+---
+
+<BaseLayout
+  title="Showcase"
+  description="Working demonstrations of the diagnostic, learning and measurement instruments used in InclusionEdge engagements."
+>
+  <section class="page-hero surface-navy">
+    <div class="container">
+      <span class="eyebrow">Showcase</span>
+      <h1>The instruments, not the sales deck.</h1>
+      <p class="lede">
+        These are the actual artefacts used inside engagements, published as working demonstrations
+        rather than described in a brochure. Each opens as a live tool you can use.
+      </p>
+      <p class="disclosure">
+        Stated plainly: these are capability demonstrations and method artefacts, not client case
+        studies. Where figures appear, they are illustrative and labelled as such. We would rather
+        show you the instrument than imply engagements we have not yet delivered.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <ol class="showcase-list">
+        {
+          showcase.map((item, i) => (
+            <li class="showcase-row">
+              <div class="row-index">{String(i + 1).padStart(2, '0')}</div>
+              <div class="row-body">
+                <div class="row-tags">
+                  <span class="badge badge-teal">{item.kind}</span>
+                  <span class="badge badge-outline">{item.stage}</span>
+                </div>
+                <h2><a href={`/showcase/${item.slug}/`}>{item.title}</a></h2>
+                <p class="row-summary">{item.summary}</p>
+                <p class="row-problem text-small text-muted">{item.problem}</p>
+                <a href={`/showcase/${item.slug}/`} class="link-arrow">Open demo</a>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section-sm cta-band">
+    <div class="container cta-inner">
+      <h2>These instruments run inside a real engagement.</h2>
+      <p class="lede">
+        The demos are standalone. In practice they sit inside the five-stage journey, calibrated to
+        your operating context.
+      </p>
+      <div class="flex-row cta-actions">
+        <a href="/approach/" class="btn btn-outline">See the journey</a>
+        <a href="/contact/" class="btn btn-primary">Start a conversation</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero { padding-block: clamp(4rem, 8vw, 6.5rem); }
+  .page-hero h1 { max-width: 16ch; margin-bottom: 1.5rem; }
+  .page-hero .lede { max-width: 56ch; }
+
+  .disclosure {
+    max-width: 56ch;
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line-dark);
+    font-size: 0.86rem;
+    line-height: 1.6;
+    color: var(--gray-400);
+  }
+
+  .showcase-list { list-style: none; margin: 0; padding: 0; }
+
+  .showcase-row {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding-block: clamp(2rem, 4vw, 3rem);
+    border-top: 1px solid var(--line);
+    margin: 0;
+  }
+  .showcase-row:last-child { border-bottom: 1px solid var(--line); }
+
+  .row-index {
+    font-family: var(--font-display);
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--gray-200);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .row-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+
+  .row-body h2 { font-size: clamp(1.4rem, 2.4vw, 1.85rem); margin-bottom: 0.85rem; }
+  .row-body h2 a { color: var(--navy); }
+  .row-body h2 a:hover { color: var(--teal-deep); text-decoration: none; }
+
+  .row-summary { font-size: 1rem; line-height: 1.65; max-width: 62ch; }
+  .row-problem { max-width: 62ch; line-height: 1.62; margin-bottom: 1.25rem; }
+
+  .cta-band { background: var(--gray-100); border-top: 1px solid var(--line); }
+  .cta-inner { text-align: center; max-width: 44rem; }
+  .cta-inner h2 { margin-bottom: 1rem; }
+  .cta-inner .lede { margin-bottom: 2rem; }
+  .cta-actions { justify-content: center; }
+
+  @media (max-width: 700px) {
+    .showcase-row { grid-template-columns: 1fr; gap: 0.75rem; }
+    .row-index { font-size: 1.5rem; }
+  }
+</style>

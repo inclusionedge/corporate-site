@@ -1,0 +1,66 @@
+---
+interface Props {
+  variant?: 'bracket' | 'seam' | 'ladder' | 'grid';
+  class?: string;
+}
+const { variant = 'bracket', class: className = '' } = Astro.props;
+---
+
+{
+  variant === 'bracket' && (
+    <svg class={className} viewBox="0 0 240 320" fill="none" aria-hidden="true" focusable="false">
+      <path
+        d="M212 14 L52 62 L52 258 L212 306"
+        stroke="currentColor"
+        stroke-width="26"
+        stroke-linejoin="miter"
+        opacity="0.9"
+      />
+      <rect x="206" y="0" width="26" height="320" fill="currentColor" />
+    </svg>
+  )
+}
+
+{
+  variant === 'seam' && (
+    <svg class={className} viewBox="0 0 400 200" fill="none" aria-hidden="true" focusable="false">
+      <line x1="0" y1="100" x2="150" y2="100" stroke="currentColor" stroke-width="2" />
+      <line x1="250" y1="100" x2="400" y2="100" stroke="currentColor" stroke-width="2" />
+      <line
+        x1="150"
+        y1="100"
+        x2="250"
+        y2="100"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-dasharray="6 7"
+        opacity="0.55"
+      />
+      <circle cx="150" cy="100" r="6" fill="currentColor" />
+      <circle cx="250" cy="100" r="6" fill="currentColor" />
+    </svg>
+  )
+}
+
+{
+  variant === 'ladder' && (
+    <svg class={className} viewBox="0 0 200 260" fill="none" aria-hidden="true" focusable="false">
+      <rect x="0" y="0" width="200" height="66" fill="currentColor" opacity="0.28" />
+      <rect x="0" y="86" width="200" height="66" fill="currentColor" opacity="0.55" />
+      <rect x="0" y="172" width="200" height="66" fill="currentColor" opacity="0.9" />
+    </svg>
+  )
+}
+
+{
+  variant === 'grid' && (
+    <svg class={className} viewBox="0 0 320 320" fill="none" aria-hidden="true" focusable="false">
+      <defs>
+        <pattern id="ie-diag" width="22" height="22" patternUnits="userSpaceOnUse" patternTransform="rotate(-32)">
+          <line x1="0" y1="0" x2="0" y2="22" stroke="currentColor" stroke-width="1.5" />
+        </pattern>
+      </defs>
+      <rect width="320" height="320" fill="url(#ie-diag)" />
+    </svg>
+  )
+}

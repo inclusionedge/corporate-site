@@ -1,0 +1,337 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { tiers } from '../data/tiers';
+---
+
+<BaseLayout
+  title="Programmes"
+  description="CARE, ENGAGE and ENABLE — three tiers of inclusion capability calibrated to all staff, people managers and senior leadership."
+>
+  <section class="page-hero surface-navy">
+    <div class="container">
+      <span class="eyebrow">Programmes</span>
+      <h1>Three tiers. One framework.</h1>
+      <p class="lede">
+        Culture change needs every altitude. A single all-staff session builds awareness but leaves
+        managers unequipped for the actual conversation, and leaders unaware of the conditions they
+        are setting. Each tier is pitched at how close a role sits to the decisions where inclusion
+        is determined.
+      </p>
+    </div>
+  </section>
+
+  <!-- Tier nav -->
+  <nav class="tier-nav" aria-label="Programme tiers">
+    <div class="container tier-nav-inner">
+      {
+        tiers.map((tier) => (
+          <a href={`#${tier.id}`}>
+            <strong>{tier.name}{tier.trademark && <sup>&trade;</sup>}</strong>
+            <span>{tier.audience}</span>
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+
+  {
+    tiers.map((tier, i) => (
+      <section class={`section tier-section ${i % 2 === 1 ? 'surface-tint' : ''}`} id={tier.id}>
+        <div class="container">
+          <header class="tier-header">
+            <div class="tier-title-block">
+              <span class="eyebrow">{tier.tierLabel}</span>
+              <h2 class="tier-name">
+                {tier.name}
+                {tier.trademark && <sup>&trade;</sup>}
+              </h2>
+              {tier.expansion && <p class="tier-expansion">{tier.expansion}</p>}
+            </div>
+            <div class="tier-summary-block">
+              <p class="lede">{tier.summary}</p>
+              {tier.status === 'in-build' && (
+                <p class="status-note">
+                  <span class="badge badge-outline">Curriculum in build</span>
+                  <span class="status-text">{tier.statusNote}</span>
+                </p>
+              )}
+            </div>
+          </header>
+
+          <div class="tier-body">
+            <div class="qa-block">
+              <h3 class="qa-label">Why it exists</h3>
+              <p>{tier.why}</p>
+            </div>
+
+            <div class="qa-block">
+              <h3 class="qa-label">What it is</h3>
+              <p>{tier.what}</p>
+            </div>
+
+            <div class="qa-block">
+              <h3 class="qa-label">Who it&rsquo;s for</h3>
+              <ul class="who-list">
+                {tier.who.map((w) => <li>{w}</li>)}
+              </ul>
+            </div>
+
+            <div class="qa-block">
+              <h3 class="qa-label">How it runs</h3>
+              <dl class="how-list">
+                {tier.how.map((h) => (
+                  <div class="how-item">
+                    <dt>{h.label}</dt>
+                    <dd>{h.detail}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+
+          <div class="outcomes">
+            <h3 class="qa-label">What participants can do afterwards</h3>
+            <ul class="outcome-list">
+              {tier.outcomes.map((o) => <li>{o}</li>)}
+            </ul>
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <!-- Delivery modes -->
+  <section class="section surface-navy">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Delivery</span>
+        <h2>How the tiers reach people.</h2>
+        <p class="lede">
+          The tier defines the capability. These are the formats through which it is built,
+          reinforced and measured.
+        </p>
+      </div>
+
+      <div class="grid grid-3 modes">
+        <div class="card-numbered">
+          <span class="num">Build</span>
+          <h3>Workshops</h3>
+          <p class="text-small text-muted">
+            Facilitated, scenario-based sessions using a case bank developed from your operating
+            context during co-development.
+          </p>
+        </div>
+        <div class="card-numbered">
+          <span class="num">Build</span>
+          <h3>Blended eLearning</h3>
+          <p class="text-small text-muted">
+            Self-paced modules establishing framework and vocabulary before the room, so facilitated
+            time is spent on practice rather than definitions.
+          </p>
+        </div>
+        <div class="card-numbered">
+          <span class="num">Reinforce</span>
+          <h3>Clinics</h3>
+          <p class="text-small text-muted">
+            Short follow-up sessions where participants bring the situation they are actually
+            facing, not a hypothetical one.
+          </p>
+        </div>
+        <div class="card-numbered">
+          <span class="num">Diagnose</span>
+          <h3>Onsite audit</h3>
+          <p class="text-small text-muted">
+            Workplace walkthrough and stakeholder interviews, producing a task-level view of where
+            demands and abilities are mismatched.
+          </p>
+        </div>
+        <div class="card-numbered">
+          <span class="num">Diagnose</span>
+          <h3>Diagnostic report</h3>
+          <p class="text-small text-muted">
+            Findings mapped to tiers and to Think / Say / Do, with a recommended sequence rather
+            than a catalogue of everything available.
+          </p>
+        </div>
+        <div class="card-numbered">
+          <span class="num">Measure</span>
+          <h3>Pulse &amp; Impact Snapshot</h3>
+          <p class="text-small text-muted">
+            Baseline, post and follow-up pulses, closing with a one-page before-and-after proof
+            asset weighted toward behaviour.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm cta-band">
+    <div class="container cta-inner">
+      <h2>Not sure which tier to start with?</h2>
+      <p class="lede">
+        Most engagements begin with a discovery conversation and a short audit, because the right
+        sequence depends on where the seams actually are.
+      </p>
+      <a href="/contact/" class="btn btn-primary">Start a conversation</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero { padding-block: clamp(4rem, 8vw, 6.5rem); }
+  .page-hero h1 { max-width: 16ch; margin-bottom: 1.5rem; }
+  .page-hero .lede { max-width: 58ch; }
+
+  .tier-nav {
+    position: sticky;
+    top: 78px;
+    z-index: 40;
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .tier-nav-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .tier-nav a {
+    display: block;
+    padding: 1.1rem 1rem 1.1rem 0;
+    color: var(--navy);
+    border-right: 1px solid var(--line);
+  }
+  .tier-nav a:last-child { border-right: none; }
+  .tier-nav a + a { padding-left: 1.25rem; }
+  .tier-nav a:hover { text-decoration: none; }
+  .tier-nav a:hover strong { color: var(--teal-deep); }
+
+  .tier-nav strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.02rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.15rem;
+  }
+  .tier-nav sup { font-size: 0.45em; top: -0.9em; color: var(--teal-deep); }
+  .tier-nav span { font-size: 0.78rem; color: var(--gray-600); }
+
+  .tier-section { scroll-margin-top: 150px; }
+
+  .tier-header {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    padding-bottom: 3rem;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+  }
+
+  .tier-name {
+    font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+    letter-spacing: 0.005em;
+    margin-bottom: 0.75rem;
+  }
+  .tier-name sup { font-size: 0.34em; top: -1.4em; color: var(--teal-deep); }
+
+  .tier-expansion {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--teal-deep);
+    letter-spacing: 0.01em;
+    margin: 0;
+  }
+
+  .status-note {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .status-note .badge { flex-shrink: 0; }
+  .status-text { font-size: 0.85rem; color: var(--gray-600); line-height: 1.55; }
+
+  .tier-body {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .qa-label {
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    margin-bottom: 1rem;
+  }
+
+  .qa-block p { font-size: 0.97rem; line-height: 1.7; margin: 0; }
+
+  .who-list { margin: 0; padding-left: 1.1rem; font-size: 0.95rem; }
+  .who-list li { margin-bottom: 0.5rem; }
+
+  .how-list { margin: 0; }
+  .how-item { padding-bottom: 1.15rem; margin-bottom: 1.15rem; border-bottom: 1px solid var(--line); }
+  .how-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .how-item dt {
+    font-family: var(--font-display);
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.35rem;
+  }
+  .how-item dd { margin: 0; font-size: 0.92rem; color: var(--gray-600); line-height: 1.6; }
+
+  .outcomes {
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .outcome-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 0.85rem 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .outcome-list li {
+    position: relative;
+    padding-left: 1.6rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .outcome-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 9px;
+    height: 2px;
+    background: var(--teal);
+  }
+
+  .modes .card-numbered .num { letter-spacing: 0.13em; text-transform: uppercase; }
+
+  .cta-band { background: var(--gray-100); border-top: 1px solid var(--line); }
+  .cta-inner { text-align: center; max-width: 44rem; }
+  .cta-inner h2 { margin-bottom: 1rem; }
+  .cta-inner .lede { margin-bottom: 2rem; }
+
+  @media (max-width: 900px) {
+    .tier-header, .tier-body { grid-template-columns: 1fr; }
+    .tier-nav { position: static; }
+    .tier-nav-inner { grid-template-columns: 1fr; }
+    .tier-nav a { border-right: none; border-bottom: 1px solid var(--line); padding: 0.85rem 0; }
+    .tier-nav a + a { padding-left: 0; }
+    .tier-nav a:last-child { border-bottom: none; }
+  }
+</style>

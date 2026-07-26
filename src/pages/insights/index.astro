@@ -1,0 +1,176 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('insights', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const [lead, ...rest] = posts;
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<BaseLayout
+  title="Insights"
+  description="Thinking from the practice — opinion and analysis on workplace inclusion, neurodivergence, job design and Singapore's regulatory direction."
+>
+  <section class="page-hero surface-navy">
+    <div class="container">
+      <span class="eyebrow">Insights</span>
+      <h1>Thinking from the practice.</h1>
+      <p class="lede">
+        Opinion and analysis on where inclusion work goes wrong, and the design decisions that
+        avoid the same traps. Written from delivery, not from a content calendar.
+      </p>
+    </div>
+  </section>
+
+  {
+    lead && (
+      <section class="section-sm">
+        <div class="container">
+          <a href={`/insights/${lead.id}/`} class="lead-post">
+            <div class="lead-meta">
+              <span class="badge badge-teal">Featured</span>
+              <span class="lead-cat">{lead.data.category}</span>
+            </div>
+            <h2>{lead.data.title}</h2>
+            <p class="lede lead-desc">{lead.data.description}</p>
+            <div class="lead-foot">
+              <span>{fmt(lead.data.pubDate)}</span>
+              <span aria-hidden="true">·</span>
+              <span>{lead.data.readingTime}</span>
+              <span class="link-arrow lead-arrow">Read</span>
+            </div>
+          </a>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section-sm">
+    <div class="container">
+      <ul class="post-list">
+        {
+          rest.map((post) => (
+            <li class="post-row">
+              <div class="row-meta">
+                <span class="row-cat">{post.data.category}</span>
+                <time datetime={post.data.pubDate.toISOString()}>{fmt(post.data.pubDate)}</time>
+              </div>
+              <div class="row-body">
+                <h2><a href={`/insights/${post.id}/`}>{post.data.title}</a></h2>
+                <p class="text-muted">{post.data.description}</p>
+                <span class="row-time text-small">{post.data.readingTime}</span>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-sm cta-band">
+    <div class="container cta-inner">
+      <h2>New pieces land on LinkedIn first.</h2>
+      <p class="lede">
+        Everything published here is announced there. Follow along, or subscribe to the feed
+        directly.
+      </p>
+      <div class="flex-row cta-actions">
+        <a href="https://www.linkedin.com/company/inclusionedge" rel="noopener" class="btn btn-outline">Follow on LinkedIn</a>
+        <a href="/rss.xml" class="btn btn-primary">RSS feed</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero { padding-block: clamp(4rem, 8vw, 6.5rem); }
+  .page-hero h1 { max-width: 16ch; margin-bottom: 1.5rem; }
+  .page-hero .lede { max-width: 56ch; }
+
+  .lead-post {
+    display: block;
+    background: var(--gray-100);
+    border-left: 3px solid var(--teal);
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    color: inherit;
+  }
+  .lead-post:hover { text-decoration: none; }
+  .lead-post:hover h2 { color: var(--teal-deep); }
+
+  .lead-meta { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1.25rem; }
+
+  .lead-cat {
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-600);
+  }
+
+  .lead-post h2 {
+    font-size: clamp(1.6rem, 3.2vw, 2.35rem);
+    max-width: 22ch;
+    margin-bottom: 1rem;
+  }
+
+  .lead-desc { max-width: 62ch; margin-bottom: 1.5rem; }
+
+  .lead-foot {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 0.84rem;
+    color: var(--gray-600);
+  }
+  .lead-arrow { margin-left: auto; }
+
+  .post-list { list-style: none; margin: 0; padding: 0; }
+
+  .post-row {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding-block: 2rem;
+    border-top: 1px solid var(--line);
+    margin: 0;
+  }
+  .post-row:last-child { border-bottom: 1px solid var(--line); }
+
+  .row-meta { display: flex; flex-direction: column; gap: 0.35rem; }
+
+  .row-cat {
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+  }
+  .row-meta time { font-size: 0.8rem; color: var(--gray-600); }
+
+  .row-body h2 { font-size: clamp(1.2rem, 2vw, 1.5rem); margin-bottom: 0.6rem; max-width: 32ch; }
+  .row-body h2 a { color: var(--navy); }
+  .row-body h2 a:hover { color: var(--teal-deep); text-decoration: none; }
+  .row-body p { font-size: 0.95rem; max-width: 62ch; margin-bottom: 0.75rem; }
+  .row-time { color: var(--gray-600); }
+
+  .cta-band { background: var(--navy); }
+  .cta-inner { text-align: center; max-width: 44rem; }
+  .cta-inner h2 { color: var(--white); margin-bottom: 1rem; }
+  .cta-inner .lede { color: var(--gray-400); margin-bottom: 2rem; }
+  .cta-actions { justify-content: center; }
+  .cta-band .btn-outline { border-color: rgba(255,255,255,0.4); color: var(--white); }
+  .cta-band .btn-outline:hover { background: transparent; border-color: var(--teal); color: var(--teal); }
+
+  @media (max-width: 720px) {
+    .post-row { grid-template-columns: 1fr; gap: 0.6rem; }
+    .row-meta { flex-direction: row; gap: 0.75rem; align-items: center; }
+  }
+</style>

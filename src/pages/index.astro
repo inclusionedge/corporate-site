@@ -1,0 +1,390 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BrandDevice from '../components/BrandDevice.astro';
+import { tiers } from '../data/tiers';
+import { showcase } from '../data/showcase';
+import { site } from '../data/site';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('insights', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout title={site.name} description={site.description}>
+  <!-- Hero -->
+  <section class="hero surface-navy">
+    <BrandDevice variant="bracket" class="hero-device" />
+    <div class="container hero-inner">
+      <span class="eyebrow">Workplace inclusion, engineered for proof</span>
+      <h1 class="hero-title">Where intent meets lived reality.</h1>
+      <p class="lede hero-lede">
+        Most organisations already intend to be inclusive. What breaks down is the everyday
+        behaviour in between — the ambiguous instruction, the meeting that moves too fast, the
+        assumption made about a colleague nobody thought to ask. InclusionEdge builds that
+        behaviour deliberately, then measures whether it held.
+      </p>
+      <div class="flex-row hero-cta">
+        <a href="/programmes/" class="btn btn-primary">See the programmes</a>
+        <a href="/approach/" class="btn btn-outline-light">How we work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Thesis -->
+  <section class="section">
+    <div class="container">
+      <div class="thesis">
+        <div class="thesis-lead">
+          <div class="rule-accent"></div>
+          <h2>Inclusion is an engineering standard, not a values statement.</h2>
+        </div>
+        <div class="thesis-body">
+          <p>
+            Exclusion at work is rarely hostility. It is a mismatch — between what a task demands
+            and what a person can readily supply, under conditions the organisation set. A values
+            statement cannot address a mismatch. A design standard can.
+          </p>
+          <p>
+            That reframe changes everything downstream. Roles become stacks of demands rather than
+            single objects. Adjustment stops being an exception granted to an individual and becomes
+            a correction that usually improves the role for everyone in it. And accountability
+            lands with whoever designed the work — a specific manager, in a specific function, with
+            authority to change it.
+          </p>
+          <a href="/insights/inclusion-is-an-engineering-standard/" class="link-arrow">
+            Read the full argument
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section class="section surface-tint">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">The problem</span>
+        <h2>Inclusion training has an evidence problem.</h2>
+        <p class="lede">
+          Long-running research into workplace diversity practice — most notably the multi-decade
+          work of Frank Dobbin and Alexandra Kalev across several hundred organisations — points
+          consistently to the same finding: one-off, compliance-driven, awareness-only training
+          rarely changes what people do, and can entrench the defensiveness it was meant to remove.
+        </p>
+      </div>
+
+      <div class="grid grid-3">
+        <div class="card-numbered">
+          <span class="num">01</span>
+          <h3>Awareness isn&rsquo;t behaviour</h3>
+          <p class="text-muted text-small">
+            Knowing the definition of neurodivergence does not change how a manager responds when a
+            colleague asks for something in writing rather than verbally, in a meeting already
+            running late.
+          </p>
+        </div>
+        <div class="card-numbered">
+          <span class="num">02</span>
+          <h3>One session, no reinforcement</h3>
+          <p class="text-muted text-small">
+            A single workshop with no manager layer, no leadership conditions and no measurement is
+            a certificate exercise. It documents that something occurred. It does not demonstrate
+            that anything changed.
+          </p>
+        </div>
+        <div class="card-numbered">
+          <span class="num">03</span>
+          <h3>Buyers are proof-hungry</h3>
+          <p class="text-muted text-small">
+            HR and business leaders have been sold culture change with no way to verify it
+            happened. They now ask for evidence before they ask for a proposal — and they are right
+            to.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Capability ladder -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">The capability ladder</span>
+        <h2>Three tiers, calibrated to proximity.</h2>
+        <p class="lede">
+          Not three programmes stitched together. One behavioural framework, pitched at how close a
+          role sits to the decisions where inclusion is actually determined.
+        </p>
+      </div>
+
+      <div class="ladder">
+        {
+          tiers.map((tier) => (
+            <a href={`/programmes/#${tier.id}`} class="ladder-item">
+              <div class="ladder-meta">
+                <span class="ladder-label">{tier.tierLabel}</span>
+                <h3 class="ladder-name">
+                  {tier.name}
+                  {tier.trademark && <sup>&trade;</sup>}
+                </h3>
+              </div>
+              <p class="ladder-summary">{tier.summary}</p>
+              <span class="link-arrow">Explore {tier.name}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Seam / how we work -->
+  <section class="section surface-navy seam-band">
+    <div class="container">
+      <div class="seam-grid">
+        <div>
+          <span class="eyebrow">How we work</span>
+          <h2>End to end, by one practice — because the seams are AI-first.</h2>
+          <p class="lede">
+            Discovery, design, co-development, delivery and impact measurement are not handed
+            between departments. One practitioner runs the full arc, supported by infrastructure
+            that absorbs the work a delivery team would otherwise carry.
+          </p>
+          <p class="lede">
+            That is not an operational footnote. It is why a single practice can deliver at the
+            depth an MNC expects, and why the proof arrives with the programme rather than a
+            quarter later.
+          </p>
+          <a href="/approach/" class="btn btn-outline-light">See the full journey</a>
+        </div>
+        <div class="seam-visual">
+          <BrandDevice variant="grid" class="seam-grid-device" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Showcase preview -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Showcase</span>
+        <h2>The instruments, not the sales deck.</h2>
+        <p class="lede">
+          Working demonstrations of the diagnostic and measurement tools used in engagements. Each
+          one is the actual artefact, not a description of it.
+        </p>
+      </div>
+
+      <div class="grid grid-2 showcase-preview">
+        {
+          showcase.slice(0, 4).map((item) => (
+            <a href={`/showcase/${item.slug}/`} class="showcase-card">
+              <span class="badge badge-outline">{item.kind}</span>
+              <h3>{item.title}</h3>
+              <p class="text-muted text-small">{item.summary}</p>
+              <span class="link-arrow">Open demo</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Insights preview -->
+  <section class="section surface-tint">
+    <div class="container">
+      <div class="insights-head">
+        <div>
+          <span class="eyebrow">Insights</span>
+          <h2>Thinking from the practice.</h2>
+        </div>
+        <a href="/insights/" class="link-arrow">All insights</a>
+      </div>
+
+      <div class="grid grid-3">
+        {
+          posts.map((post) => (
+            <a href={`/insights/${post.id}/`} class="post-card">
+              <span class="post-cat">{post.data.category}</span>
+              <h3>{post.data.title}</h3>
+              <p class="text-muted text-small">{post.data.description}</p>
+              <span class="post-meta text-small">{post.data.readingTime}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-sm cta-band">
+    <div class="container cta-inner">
+      <h2>Start with a diagnostic, not a proposal.</h2>
+      <p class="lede">
+        The first conversation is about where your organisation actually stands. Bring the problem;
+        we will bring the framework.
+      </p>
+      <a href="/contact/" class="btn btn-primary">Start a conversation</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(5rem, 11vw, 9.5rem);
+  }
+
+  .hero-device {
+    position: absolute;
+    right: -4%;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 118%;
+    width: auto;
+    color: var(--teal);
+    opacity: 0.11;
+    pointer-events: none;
+  }
+
+  .hero-inner { position: relative; z-index: 1; }
+
+  .hero-title {
+    font-size: var(--fs-display);
+    max-width: 15ch;
+    margin-bottom: 1.75rem;
+  }
+
+  .hero-lede { max-width: 54ch; margin-bottom: 2.5rem; }
+
+  .thesis {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .thesis-lead h2 { max-width: 16ch; }
+  .thesis-body p { font-size: 1.05rem; }
+
+  .ladder {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .ladder-item {
+    display: block;
+    padding: 2.25rem 2rem 2.25rem 0;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    color: inherit;
+    transition: background-color 0.18s ease;
+  }
+  .ladder-item:last-child { border-right: none; }
+  .ladder-item:hover { background: var(--gray-100); text-decoration: none; }
+  .ladder-item + .ladder-item { padding-left: 2rem; }
+
+  .ladder-label {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--gray-600);
+    margin-bottom: 0.75rem;
+  }
+
+  .ladder-name {
+    font-size: 1.85rem;
+    letter-spacing: 0.01em;
+    margin-bottom: 1rem;
+  }
+  .ladder-name sup { font-size: 0.42em; top: -1.1em; color: var(--teal-deep); }
+
+  .ladder-summary {
+    font-size: 0.92rem;
+    color: var(--gray-600);
+    line-height: 1.62;
+    margin-bottom: 1.4rem;
+  }
+
+  .seam-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+  .seam-grid h2 { margin-bottom: 1.25rem; }
+  .seam-grid .lede { margin-bottom: 1.15rem; }
+  .seam-grid .btn { margin-top: 1rem; }
+
+  .seam-visual { display: flex; justify-content: center; }
+  .seam-grid-device { width: 100%; max-width: 300px; color: var(--teal); opacity: 0.3; }
+
+  .showcase-card {
+    display: block;
+    border-top: 2px solid var(--navy);
+    padding-top: 1.5rem;
+    color: inherit;
+  }
+  .showcase-card:hover { text-decoration: none; }
+  .showcase-card:hover h3 { color: var(--teal-deep); }
+  .showcase-card h3 { margin: 0.9rem 0 0.7rem; }
+  .showcase-card p { margin-bottom: 1.1rem; }
+
+  .insights-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+  .insights-head h2 { margin: 0; }
+
+  .post-card {
+    display: block;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    color: inherit;
+    transition: border-color 0.18s ease;
+  }
+  .post-card:hover { text-decoration: none; border-color: var(--teal); }
+  .post-card:hover h3 { color: var(--teal-deep); }
+
+  .post-cat {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    margin-bottom: 0.8rem;
+  }
+
+  .post-card h3 { font-size: 1.12rem; margin-bottom: 0.65rem; }
+  .post-meta { color: var(--gray-600); }
+
+  .cta-band { background: var(--navy-800); color: var(--white); }
+  .cta-inner { text-align: center; max-width: 44rem; }
+  .cta-inner h2 { color: var(--white); margin-bottom: 1rem; }
+  .cta-inner .lede { color: var(--gray-400); margin-bottom: 2rem; }
+
+  @media (max-width: 960px) {
+    .thesis { grid-template-columns: 1fr; }
+    .ladder { grid-template-columns: 1fr; }
+    .ladder-item { padding: 2rem 0; border-right: none; }
+    .ladder-item + .ladder-item { padding-left: 0; }
+    .seam-grid { grid-template-columns: 1fr; }
+    .seam-visual { display: none; }
+    .hero-device { opacity: 0.07; right: -30%; }
+  }
+</style>

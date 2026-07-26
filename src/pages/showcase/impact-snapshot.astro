@@ -1,0 +1,256 @@
+---
+import DemoLayout from '../../layouts/DemoLayout.astro';
+
+const indicators = [
+  { label: 'Manager follows verbal briefing with written summary', base: 22, post: 71, follow: 64 },
+  { label: 'Adjustment request acknowledged within two working days', base: 38, post: 82, follow: 77 },
+  { label: 'Team member reports knowing how to raise a support need', base: 31, post: 74, follow: 69 },
+  { label: 'Meeting agenda circulated in advance', base: 44, post: 86, follow: 81 },
+];
+---
+
+<DemoLayout slug="impact-snapshot">
+  <div class="snapshot-wrap">
+    <div class="illustrative-banner">
+      <strong>Illustrative sample.</strong> The structure, indicators and attribution language are
+      exactly as delivered. The figures are placeholders — they are not from a client engagement,
+      and we will not present them as though they were.
+    </div>
+
+    <article class="snapshot">
+      <header class="snap-head">
+        <div>
+          <span class="snap-kicker">Impact Snapshot</span>
+          <h2>CARE Essentials — Operations division</h2>
+          <p class="snap-meta">Cohort of 48 · Baseline, post-session and six-week follow-up</p>
+        </div>
+        <img src="/assets/inclusionedgesubmarknavy.png" alt="" class="snap-mark" width="812" height="1176" />
+      </header>
+
+      <section class="snap-section">
+        <h3 class="snap-label">Behaviour indicators</h3>
+        <p class="snap-note">
+          Percentage of respondents reporting the behaviour occurred in the preceding two weeks.
+          Kirkpatrick Level 3.
+        </p>
+
+        <div class="indicators">
+          {
+            indicators.map((ind) => (
+              <div class="indicator">
+                <p class="ind-label">{ind.label}</p>
+                <div class="ind-bars">
+                  <div class="ind-row">
+                    <span class="ind-key">Baseline</span>
+                    <div class="ind-track"><div class="ind-fill fill-base" style={`width:${ind.base}%`} /></div>
+                    <span class="ind-val">{ind.base}%</span>
+                  </div>
+                  <div class="ind-row">
+                    <span class="ind-key">Post</span>
+                    <div class="ind-track"><div class="ind-fill fill-post" style={`width:${ind.post}%`} /></div>
+                    <span class="ind-val">{ind.post}%</span>
+                  </div>
+                  <div class="ind-row">
+                    <span class="ind-key">6 weeks</span>
+                    <div class="ind-track"><div class="ind-fill fill-follow" style={`width:${ind.follow}%`} /></div>
+                    <span class="ind-val">{ind.follow}%</span>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="snap-section snap-split">
+        <div>
+          <h3 class="snap-label">What held</h3>
+          <p>
+            Written follow-up after verbal briefing showed the largest movement and retained most of
+            it at six weeks. Teams that adopted it as a default practice — rather than as an
+            individual accommodation — retained it more consistently.
+          </p>
+        </div>
+        <div>
+          <h3 class="snap-label">What slipped</h3>
+          <p>
+            All indicators declined between the post-session and six-week measures. This is expected
+            and is the reason the follow-up pulse exists: a post-session reading alone would have
+            overstated the result by a material margin.
+          </p>
+        </div>
+      </section>
+
+      <section class="snap-section attribution">
+        <h3 class="snap-label">Attribution — stated plainly</h3>
+        <ul>
+          <li>
+            This is a single cohort with no control group. Movement is <strong>associated with</strong>
+            the programme; it is not demonstrated to be caused by it.
+          </li>
+          <li>
+            A divisional restructure was announced in week three of the measurement window. Its
+            effect on these indicators is unknown and cannot be separated out.
+          </li>
+          <li>
+            Self-reported behaviour over-reports relative to observed behaviour. Treat absolute
+            values as indicative and movement as the meaningful signal.
+          </li>
+          <li>
+            No return-on-investment figure is presented. A six-week window on one cohort does not
+            support one, and any figure offered would be manufactured.
+          </li>
+        </ul>
+      </section>
+
+      <footer class="snap-foot">
+        <span>InclusionEdge · Impact Snapshot</span>
+        <span>Where intent meets lived reality.</span>
+      </footer>
+    </article>
+
+    <p class="demo-foot text-small text-muted">
+      The Impact Snapshot exists because proof-hungry buyers are right to be sceptical. Its
+      credibility comes from the attribution section as much as the indicators — a report that
+      claims less is worth more.
+    </p>
+  </div>
+</DemoLayout>
+
+<style>
+  .illustrative-banner {
+    background: var(--gray-100);
+    border-left: 3px solid var(--teal);
+    padding: 1.1rem 1.35rem;
+    font-size: 0.87rem;
+    line-height: 1.6;
+    color: var(--gray-600);
+    margin-bottom: 2rem;
+    max-width: 62ch;
+  }
+  .illustrative-banner strong { color: var(--navy); }
+
+  .snapshot {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: clamp(1.75rem, 4vw, 3rem);
+    box-shadow: 0 1px 2px rgba(13, 27, 42, 0.05), 0 12px 32px rgba(13, 27, 42, 0.05);
+  }
+
+  .snap-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 2px solid var(--navy);
+    margin-bottom: 2rem;
+  }
+
+  .snap-kicker {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    margin-bottom: 0.6rem;
+  }
+
+  .snap-head h2 { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin-bottom: 0.4rem; }
+  .snap-meta { font-size: 0.85rem; color: var(--gray-600); margin: 0; }
+  .snap-mark { height: 44px; width: auto; opacity: 0.9; flex-shrink: 0; }
+
+  .snap-section { margin-bottom: 2.25rem; }
+  .snap-section:last-of-type { margin-bottom: 0; }
+
+  .snap-label {
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    margin-bottom: 0.75rem;
+  }
+
+  .snap-note { font-size: 0.83rem; color: var(--gray-600); margin-bottom: 1.5rem; }
+
+  .indicators { display: grid; gap: 1.5rem; }
+
+  .ind-label {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.7rem;
+  }
+
+  .ind-row {
+    display: grid;
+    grid-template-columns: 4.75rem 1fr 2.75rem;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .ind-key { font-size: 0.76rem; color: var(--gray-600); }
+  .ind-track { background: var(--gray-200); height: 9px; border-radius: 4px; overflow: hidden; }
+  .ind-fill { height: 100%; border-radius: 4px; }
+  .fill-base { background: var(--gray-400); }
+  .fill-post { background: var(--teal); }
+  .fill-follow { background: var(--teal-deep); }
+  .ind-val {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--navy);
+    text-align: right;
+  }
+
+  .snap-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--line);
+  }
+  .snap-split p { font-size: 0.9rem; line-height: 1.65; margin: 0; }
+
+  .attribution {
+    background: var(--gray-100);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.75rem;
+  }
+  .attribution ul { margin: 0; padding-left: 1.1rem; }
+  .attribution li { font-size: 0.87rem; line-height: 1.62; margin-bottom: 0.7rem; }
+  .attribution li:last-child { margin-bottom: 0; }
+
+  .snap-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.76rem;
+    color: var(--gray-600);
+  }
+
+  .demo-foot {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    max-width: 68ch;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 700px) {
+    .snap-split { grid-template-columns: 1fr; }
+    .snap-mark { display: none; }
+    .ind-row { grid-template-columns: 4rem 1fr 2.5rem; }
+  }
+</style>

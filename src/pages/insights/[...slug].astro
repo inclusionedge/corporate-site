@@ -1,0 +1,191 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('insights', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const all = (await getCollection('insights', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const more = all.filter((p) => p.id !== post.id).slice(0, 2);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  author: { '@type': 'Organization', name: site.name, url: site.domain },
+  publisher: { '@type': 'Organization', name: site.name, url: site.domain },
+  mainEntityOfPage: new URL(Astro.url.pathname, site.domain).href,
+};
+---
+
+<BaseLayout
+  title={post.data.seoTitle ?? post.data.title}
+  description={post.data.description}
+  type="article"
+  publishDate={post.data.pubDate}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} slot="head" />
+
+  <article>
+    <header class="article-hero surface-navy">
+      <div class="container-narrow">
+        <nav class="crumb" aria-label="Breadcrumb">
+          <a href="/insights/">Insights</a>
+          <span aria-hidden="true">/</span>
+          <span>{post.data.category}</span>
+        </nav>
+        <h1>{post.data.title}</h1>
+        <div class="article-meta">
+          <time datetime={post.data.pubDate.toISOString()}>{fmt(post.data.pubDate)}</time>
+          <span aria-hidden="true">·</span>
+          <span>{post.data.readingTime}</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="section-sm">
+      <div class="container-narrow">
+        <p class="article-standfirst">{post.data.description}</p>
+        <div class="prose">
+          <Content />
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <section class="section-sm article-cta">
+    <div class="container-narrow">
+      <div class="cta-inner">
+        <h2>This thinking is built into the programmes.</h2>
+        <p class="text-muted">
+          CARE, ENGAGE and ENABLE apply the same principles as structured capability rather than
+          commentary.
+        </p>
+        <div class="flex-row">
+          <a href="/programmes/" class="btn btn-outline">See the programmes</a>
+          <a href="/contact/" class="btn btn-primary">Start a conversation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    more.length > 0 && (
+      <section class="section-sm more-band">
+        <div class="container-narrow">
+          <h2 class="more-label">More insights</h2>
+          <div class="more-grid">
+            {more.map((p) => (
+              <a href={`/insights/${p.id}/`} class="more-card">
+                <span class="more-cat">{p.data.category}</span>
+                <h3>{p.data.title}</h3>
+                <span class="link-arrow">Read</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .article-hero { padding-block: clamp(3rem, 6vw, 4.75rem); }
+
+  .crumb {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.82rem;
+    color: var(--gray-400);
+    margin-bottom: 1.5rem;
+  }
+  .crumb a { color: var(--teal); }
+
+  .article-hero h1 {
+    font-size: clamp(1.9rem, 4vw, 2.85rem);
+    max-width: 24ch;
+    margin-bottom: 1.25rem;
+  }
+
+  .article-meta {
+    display: flex;
+    gap: 0.65rem;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--gray-400);
+  }
+
+  .article-standfirst {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 1.9vw, 1.3rem);
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--navy);
+    letter-spacing: -0.012em;
+    padding-bottom: 1.75rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--line);
+    max-width: 42rem;
+  }
+
+  .article-cta { border-top: 1px solid var(--line); }
+  .cta-inner {
+    background: var(--gray-100);
+    border-left: 3px solid var(--teal);
+    padding: 1.85rem 2rem;
+  }
+  .cta-inner h2 { font-size: 1.2rem; margin-bottom: 0.6rem; }
+  .cta-inner p { font-size: 0.92rem; margin-bottom: 1.35rem; }
+
+  .more-band { background: var(--gray-100); border-top: 1px solid var(--line); }
+
+  .more-label {
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    margin-bottom: 1.5rem;
+  }
+
+  .more-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+
+  .more-card {
+    display: block;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.4rem;
+    color: inherit;
+    transition: border-color 0.18s ease;
+  }
+  .more-card:hover { border-color: var(--teal); text-decoration: none; }
+  .more-card:hover h3 { color: var(--teal-deep); }
+
+  .more-cat {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-600);
+    margin-bottom: 0.6rem;
+  }
+  .more-card h3 { font-size: 1rem; margin-bottom: 0.85rem; }
+</style>

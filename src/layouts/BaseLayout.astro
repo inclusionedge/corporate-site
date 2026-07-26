@@ -1,0 +1,89 @@
+---
+import '@fontsource-variable/montserrat';
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Set to the page path, e.g. "/approach/" */
+  path?: string;
+  type?: 'website' | 'article';
+  publishDate?: Date;
+}
+
+const { title, description, path = '', type = 'website', publishDate } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, site.domain).href;
+const fullTitle = title === site.name ? `${site.name} — ${site.tagline}` : `${title} | ${site.name}`;
+const ogImage = new URL('/assets/inclusionedgestackedondark.png', site.domain).href;
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: site.name,
+  description: site.description,
+  url: site.domain,
+  email: site.email,
+  areaServed: 'SG',
+  address: { '@type': 'PostalAddress', addressCountry: 'SG', addressLocality: 'Singapore' },
+  sameAs: [site.linkedin],
+  slogan: site.tagline,
+  knowsAbout: [
+    'Workplace inclusion',
+    'Neurodiversity at work',
+    'Intergenerational workforce',
+    'Inclusive job design',
+    'Learning and development',
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en-SG">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/favicon-180.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0D1B2A" />
+
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_SG" />
+    {publishDate && <meta property="article:published_time" content={publishDate.toISOString()} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${site.name} Insights`} href="/rss.xml" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

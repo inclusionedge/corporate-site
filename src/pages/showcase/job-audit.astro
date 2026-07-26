@@ -1,0 +1,297 @@
+---
+import DemoLayout from '../../layouts/DemoLayout.astro';
+
+const demands = [
+  { id: 'd1', task: 'Process verbal instructions in a fast-moving stand-up', essential: false, fix: 'Follow the stand-up with a written action summary — helps the whole team, not one person.' },
+  { id: 'd2', task: 'Produce accurate reconciliations against a defined procedure', essential: true, fix: 'Load-bearing. This is the work itself.' },
+  { id: 'd3', task: 'Sustain focus in an open-plan environment', essential: false, fix: 'Offer a quiet zone or focus block. Most teams find uptake far wider than expected.' },
+  { id: 'd4', task: 'Switch rapidly between unrelated priorities', essential: false, fix: 'Batch similar work. Reduces error rates across the role, not just for one person.' },
+  { id: 'd5', task: 'Escalate anomalies to the right person within SLA', essential: true, fix: 'Load-bearing — but the escalation path can be documented rather than assumed.' },
+  { id: 'd6', task: 'Read unstated expectations in client meetings', essential: false, fix: 'Make expectations explicit in the brief. Removes ambiguity for every attendee.' },
+  { id: 'd7', task: 'Meet defined accuracy and turnaround standards', essential: true, fix: 'Load-bearing. Standards stay; the route to meeting them can change.' },
+  { id: 'd8', task: 'Attend unstructured social team events', essential: false, fix: 'Decouple belonging from optional socials. Never a performance criterion.' },
+];
+---
+
+<DemoLayout slug="job-audit">
+  <div class="audit">
+    <div class="audit-head">
+      <h2>Finance Operations Associate — task demand audit</h2>
+      <p class="text-muted text-small">
+        Mark each demand as essential to the outcome, or incidental to how the role happens to be
+        designed. The assessment updates as you go.
+      </p>
+    </div>
+
+    <div class="audit-grid">
+      <div class="demand-list" role="group" aria-label="Task demands">
+        {
+          demands.map((d) => (
+            <div class="demand" data-demand data-essential={String(d.essential)} data-fix={d.fix}>
+              <p class="demand-task">{d.task}</p>
+              <div class="demand-controls" role="radiogroup" aria-label={d.task}>
+                <button type="button" data-choice="essential">Essential</button>
+                <button type="button" data-choice="incidental">Incidental</button>
+              </div>
+              <p class="demand-fix" hidden>{d.fix}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <aside class="audit-panel">
+        <h3 class="panel-label">Assessment</h3>
+
+        <div class="stat">
+          <span class="stat-num" data-marked>0</span>
+          <span class="stat-lbl">of 8 demands assessed</span>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-head">
+            <span>Essential</span><span data-ess-count>0</span>
+          </div>
+          <div class="bar"><div class="bar-fill bar-ess" data-ess-bar style="width:0%"></div></div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-head">
+            <span>Incidental</span><span data-inc-count>0</span>
+          </div>
+          <div class="bar"><div class="bar-fill bar-inc" data-inc-bar style="width:0%"></div></div>
+        </div>
+
+        <div class="panel-verdict" data-verdict>
+          <p>Mark a demand to begin.</p>
+        </div>
+
+        <button type="button" class="reset-btn" data-reset>Reset audit</button>
+      </aside>
+    </div>
+
+    <p class="audit-foot text-small text-muted">
+      In a real engagement this runs against your actual role documentation, with the outcome
+      column agreed by the line manager rather than assumed. The point is not the score — it is the
+      conversation about which demands were ever load-bearing.
+    </p>
+  </div>
+</DemoLayout>
+
+<style>
+  .audit-head { margin-bottom: 2rem; }
+  .audit-head h2 { font-size: 1.35rem; margin-bottom: 0.6rem; }
+
+  .audit-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 0.85fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    align-items: start;
+  }
+
+  .demand-list { display: grid; gap: 0.75rem; }
+
+  .demand {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--gray-200);
+    border-radius: var(--radius);
+    padding: 1rem 1.15rem;
+    transition: border-color 0.16s ease;
+  }
+
+  .demand.is-essential { border-left-color: var(--navy); }
+  .demand.is-incidental { border-left-color: var(--teal); }
+
+  .demand-task { font-size: 0.92rem; margin: 0; line-height: 1.55; }
+
+  .demand-controls { display: flex; gap: 0.4rem; }
+
+  .demand-controls button {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid var(--line);
+    background: var(--white);
+    color: var(--gray-600);
+    border-radius: var(--radius);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.14s ease;
+  }
+  .demand-controls button:hover { border-color: var(--gray-400); color: var(--navy); }
+  .demand-controls button[aria-pressed='true'][data-choice='essential'] {
+    background: var(--navy); border-color: var(--navy); color: var(--white);
+  }
+  .demand-controls button[aria-pressed='true'][data-choice='incidental'] {
+    background: var(--teal); border-color: var(--teal); color: var(--navy);
+  }
+
+  .demand-fix {
+    grid-column: 1 / -1;
+    margin: 0.35rem 0 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--line);
+    font-size: 0.83rem;
+    line-height: 1.55;
+    color: var(--gray-600);
+  }
+  .demand-fix[hidden] { display: none; }
+
+  .audit-panel {
+    background: var(--navy);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+    position: sticky;
+    top: 100px;
+  }
+
+  .panel-label {
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1.4rem;
+  }
+
+  .stat { margin-bottom: 1.75rem; }
+  .stat-num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .stat-lbl { font-size: 0.8rem; color: var(--gray-400); }
+
+  .bar-row { margin-bottom: 1.1rem; }
+  .bar-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: var(--gray-400);
+    margin-bottom: 0.4rem;
+  }
+  .bar { background: var(--navy-700); height: 7px; border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; transition: width 0.3s ease; }
+  .bar-ess { background: var(--gray-400); }
+  .bar-inc { background: var(--teal); }
+
+  .panel-verdict {
+    margin-top: 1.6rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--line-dark);
+  }
+  .panel-verdict p { font-size: 0.85rem; line-height: 1.6; color: var(--gray-400); margin: 0; }
+  .panel-verdict strong { color: var(--white); }
+
+  .reset-btn {
+    margin-top: 1.5rem;
+    width: 100%;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.6rem;
+    background: transparent;
+    border: 1px solid var(--line-dark);
+    color: var(--gray-400);
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+  .reset-btn:hover { border-color: var(--teal); color: var(--teal); }
+
+  .audit-foot {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    max-width: 68ch;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 900px) {
+    .audit-grid { grid-template-columns: 1fr; }
+    .audit-panel { position: static; }
+    .demand { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  const demands = document.querySelectorAll<HTMLElement>('[data-demand]');
+  const markedEl = document.querySelector<HTMLElement>('[data-marked]');
+  const essCount = document.querySelector<HTMLElement>('[data-ess-count]');
+  const incCount = document.querySelector<HTMLElement>('[data-inc-count]');
+  const essBar = document.querySelector<HTMLElement>('[data-ess-bar]');
+  const incBar = document.querySelector<HTMLElement>('[data-inc-bar]');
+  const verdict = document.querySelector<HTMLElement>('[data-verdict]');
+  const resetBtn = document.querySelector<HTMLElement>('[data-reset]');
+
+  const total = demands.length;
+  const state = new Map<HTMLElement, 'essential' | 'incidental'>();
+
+  function update() {
+    let ess = 0;
+    let inc = 0;
+    state.forEach((v) => (v === 'essential' ? ess++ : inc++));
+    const marked = ess + inc;
+
+    if (markedEl) markedEl.textContent = String(marked);
+    if (essCount) essCount.textContent = String(ess);
+    if (incCount) incCount.textContent = String(inc);
+    if (essBar) essBar.style.width = `${Math.round((ess / total) * 100)}%`;
+    if (incBar) incBar.style.width = `${Math.round((inc / total) * 100)}%`;
+
+    if (!verdict) return;
+
+    if (marked === 0) {
+      verdict.innerHTML = '<p>Mark a demand to begin.</p>';
+    } else if (marked < total) {
+      verdict.innerHTML = `<p><strong>${total - marked} left.</strong> Keep going — the pattern usually only becomes visible near the end.</p>`;
+    } else {
+      const pct = Math.round((inc / total) * 100);
+      verdict.innerHTML = `<p><strong>${pct}% of demands marked incidental.</strong> Each one is a candidate for redesign that would improve the role for everyone in it — not an adjustment granted to an individual. The essential demands stay exactly as they are.</p>`;
+    }
+  }
+
+  demands.forEach((demand) => {
+    const fix = demand.querySelector<HTMLElement>('.demand-fix');
+    demand.querySelectorAll<HTMLButtonElement>('[data-choice]').forEach((btn) => {
+      btn.setAttribute('aria-pressed', 'false');
+      btn.addEventListener('click', () => {
+        const choice = btn.dataset.choice as 'essential' | 'incidental';
+        state.set(demand, choice);
+
+        demand.querySelectorAll<HTMLButtonElement>('[data-choice]').forEach((b) =>
+          b.setAttribute('aria-pressed', String(b === btn))
+        );
+
+        demand.classList.toggle('is-essential', choice === 'essential');
+        demand.classList.toggle('is-incidental', choice === 'incidental');
+
+        if (fix) fix.hidden = false;
+        update();
+      });
+    });
+  });
+
+  resetBtn?.addEventListener('click', () => {
+    state.clear();
+    demands.forEach((d) => {
+      d.classList.remove('is-essential', 'is-incidental');
+      d.querySelector<HTMLElement>('.demand-fix')!.hidden = true;
+      d.querySelectorAll<HTMLButtonElement>('[data-choice]').forEach((b) =>
+        b.setAttribute('aria-pressed', 'false')
+      );
+    });
+    update();
+  });
+
+  update();
+</script>

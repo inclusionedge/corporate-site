@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Start a conversation with InclusionEdge about building inclusive, intergenerational, neurodivergent-ready workforce capability in Singapore."
+>
+  <section class="page-hero surface-navy">
+    <div class="container">
+      <span class="eyebrow">Contact</span>
+      <h1>Bring the problem. We&rsquo;ll bring the framework.</h1>
+      <p class="lede">
+        The first conversation is a diagnostic, not a pitch. It is about where your organisation
+        actually stands — which usually turns out to be a more specific question than people expect.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <h2 class="col-label">Send an enquiry</h2>
+          <ContactForm />
+        </div>
+
+        <aside class="contact-aside">
+          <div class="aside-block">
+            <h2 class="col-label">What happens next</h2>
+            <ol class="next-steps">
+              <li>
+                <strong>We reply within two working days</strong>
+                <span>With a question or two, not a brochure.</span>
+              </li>
+              <li>
+                <strong>A short discovery conversation</strong>
+                <span>Thirty minutes, to establish whether there is a real fit.</span>
+              </li>
+              <li>
+                <strong>A scoped recommendation</strong>
+                <span>Which tier, which sequence, and what it would take to prove it worked.</span>
+              </li>
+            </ol>
+          </div>
+
+          <div class="aside-block">
+            <h2 class="col-label">Direct</h2>
+            <p class="aside-contact">
+              <a href={`mailto:${site.email}`}>{site.email}</a>
+            </p>
+            <p class="aside-contact">
+              <a href={site.linkedin} rel="noopener">LinkedIn</a>
+            </p>
+            <p class="text-small text-muted aside-loc">{site.locality}</p>
+          </div>
+
+          <div class="aside-block aside-note">
+            <h2 class="col-label">Good enquiries look like</h2>
+            <ul>
+              <li>&ldquo;Our managers freeze when someone discloses a need.&rdquo;</li>
+              <li>&ldquo;We hired inclusively and lost three people in six months.&rdquo;</li>
+              <li>&ldquo;We need to be ready before the Workplace Fairness Act bites.&rdquo;</li>
+              <li>&ldquo;We ran training last year and cannot tell whether it did anything.&rdquo;</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero { padding-block: clamp(4rem, 8vw, 6.5rem); }
+  .page-hero h1 { max-width: 18ch; margin-bottom: 1.5rem; }
+  .page-hero .lede { max-width: 56ch; }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+
+  .col-label {
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-aside { display: grid; gap: 2.5rem; }
+
+  .next-steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+  .next-steps li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 2.35rem;
+    padding-bottom: 1.35rem;
+    margin: 0;
+  }
+  .next-steps li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--teal-deep);
+    letter-spacing: 0.06em;
+  }
+  .next-steps strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.25rem;
+  }
+  .next-steps span { font-size: 0.87rem; color: var(--gray-600); line-height: 1.55; }
+
+  .aside-contact { margin-bottom: 0.5rem; font-size: 0.95rem; }
+  .aside-loc { margin-top: 0.85rem; }
+
+  .aside-note {
+    background: var(--gray-100);
+    border-left: 3px solid var(--teal);
+    padding: 1.5rem 1.6rem;
+  }
+  .aside-note ul { margin: 0; padding-left: 1.05rem; }
+  .aside-note li {
+    font-size: 0.87rem;
+    line-height: 1.55;
+    color: var(--gray-600);
+    margin-bottom: 0.65rem;
+  }
+  .aside-note li:last-child { margin-bottom: 0; }
+
+  @media (max-width: 900px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>

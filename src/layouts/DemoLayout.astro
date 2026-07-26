@@ -1,0 +1,138 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { showcase } from '../data/showcase';
+
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+const item = showcase.find((s) => s.slug === slug)!;
+const others = showcase.filter((s) => s.slug !== slug);
+---
+
+<BaseLayout title={item.title} description={item.summary}>
+  <section class="demo-hero surface-navy">
+    <div class="container">
+      <nav class="crumb" aria-label="Breadcrumb">
+        <a href="/showcase/">Showcase</a>
+        <span aria-hidden="true">/</span>
+        <span>{item.title}</span>
+      </nav>
+      <div class="crumb-tags">
+        <span class="badge badge-teal">{item.kind}</span>
+        <span class="badge badge-outline">{item.stage} stage</span>
+      </div>
+      <h1>{item.title}</h1>
+      <p class="lede">{item.summary}</p>
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container">
+      <div class="context-grid">
+        <div>
+          <h2 class="ctx-label">The problem it solves</h2>
+          <p>{item.problem}</p>
+        </div>
+        <aside class="demo-note">
+          <h2 class="ctx-label">About this demo</h2>
+          <p>{item.demoNote}</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm demo-stage">
+    <div class="container">
+      <slot />
+    </div>
+  </section>
+
+  <section class="section-sm next-band">
+    <div class="container">
+      <h2 class="ctx-label">Other instruments</h2>
+      <div class="next-grid">
+        {
+          others.map((o) => (
+            <a href={`/showcase/${o.slug}/`} class="next-card">
+              <span class="badge badge-outline">{o.kind}</span>
+              <h3>{o.title}</h3>
+              <span class="link-arrow">Open</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .demo-hero { padding-block: clamp(3rem, 6vw, 4.5rem); }
+
+  .crumb {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.82rem;
+    color: var(--gray-400);
+    margin-bottom: 1.5rem;
+  }
+  .crumb a { color: var(--teal); }
+
+  .crumb-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+
+  .demo-hero h1 { max-width: 18ch; margin-bottom: 1.1rem; }
+  .demo-hero .lede { max-width: 58ch; }
+
+  .context-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 0.65fr;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+  .context-grid p { font-size: 0.97rem; line-height: 1.7; margin: 0; }
+
+  .ctx-label {
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal-deep);
+    margin-bottom: 0.9rem;
+  }
+
+  .demo-note {
+    background: var(--gray-100);
+    border-left: 3px solid var(--teal);
+    padding: 1.35rem 1.5rem;
+  }
+  .demo-note p { font-size: 0.88rem !important; color: var(--gray-600); }
+
+  .demo-stage { padding-top: 0; }
+
+  .next-band { background: var(--gray-100); border-top: 1px solid var(--line); }
+
+  .next-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .next-card {
+    display: block;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.4rem;
+    color: inherit;
+    transition: border-color 0.18s ease;
+  }
+  .next-card:hover { border-color: var(--teal); text-decoration: none; }
+  .next-card:hover h3 { color: var(--teal-deep); }
+  .next-card h3 { font-size: 1rem; margin: 0.8rem 0 0.9rem; }
+
+  @media (max-width: 860px) {
+    .context-grid { grid-template-columns: 1fr; }
+  }
+</style>
