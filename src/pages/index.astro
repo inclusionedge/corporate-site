@@ -237,13 +237,14 @@ const posts = (await getCollection('insights', ({ data }) => !data.draft))
     padding-block: clamp(5rem, 11vw, 9.5rem);
   }
 
-  .hero-device {
+  .hero :global(.hero-device) {
     position: absolute;
     right: -4%;
     top: 50%;
     transform: translateY(-50%);
     height: 118%;
     width: auto;
+    max-width: none;
     color: var(--teal);
     opacity: 0.11;
     pointer-events: none;
@@ -324,7 +325,7 @@ const posts = (await getCollection('insights', ({ data }) => !data.draft))
   .seam-grid .btn { margin-top: 1rem; }
 
   .seam-visual { display: flex; justify-content: center; }
-  .seam-grid-device { width: 100%; max-width: 300px; color: var(--teal); opacity: 0.3; }
+  :global(.seam-grid-device) { width: 100%; max-width: 300px; color: var(--teal); opacity: 0.3; }
 
   .showcase-card {
     display: block;
@@ -385,6 +386,6 @@ const posts = (await getCollection('insights', ({ data }) => !data.draft))
     .ladder-item + .ladder-item { padding-left: 0; }
     .seam-grid { grid-template-columns: 1fr; }
     .seam-visual { display: none; }
-    .hero-device { opacity: 0.07; right: -30%; }
+    .hero :global(.hero-device) { opacity: 0.07; right: -30%; }
   }
 </style>

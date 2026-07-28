@@ -158,7 +158,7 @@ summary:focus-visible,
 .surface-navy h2,
 .surface-navy h3,
 .surface-navy h4 { color: var(--white); }
-.surface-navy a { color: var(--teal); }
+.surface-navy a:not(.btn) { color: var(--teal); }
 
 .surface-tint { background: var(--gray-100); }
 
