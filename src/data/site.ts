@@ -6,7 +6,7 @@ export interface NavItem {
 export const site = {
   name: 'InclusionEdge',
   domain: 'https://inclusionedge.co',
-  tagline: 'Where intent meets lived reality.',
+  tagline: 'Workplace Inclusion, Engineered to Hold',
   description:
     'Behaviour-first inclusion capability for intergenerational, neurodivergent-ready workforces in Singapore — discovery through measured impact.',
   locality: 'Singapore',

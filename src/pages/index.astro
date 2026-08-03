@@ -11,18 +11,18 @@ const posts = (await getCollection('insights', ({ data }) => !data.draft))
   .slice(0, 3);
 ---
 
-<BaseLayout title={site.name} description={site.description}>
+<BaseLayout title={site.name} description="Inclusive hiring, onboarding and job redesign for Singapore employers. We rebuild the task, not just the training — then measure whether it held.">
   <!-- Hero -->
   <section class="hero surface-navy">
     <BrandDevice variant="bracket" class="hero-device" />
     <div class="container hero-inner">
-      <span class="eyebrow">Workplace inclusion, engineered for proof</span>
+      <span class="eyebrow">Workplace inclusion, engineered to hold</span>
       <h1 class="hero-title">Where intent meets lived reality.</h1>
       <p class="lede hero-lede">
         Most organisations already intend to be inclusive. What breaks down is the everyday:
         the ambiguous instruction, the meeting that moves too fast, the assumption made about a
-        colleague nobody thought to ask. We build the behaviour that closes those gaps. Then we
-        measure whether it held.
+        colleague nobody thought to ask, the task built for one kind of person and never
+        revisited. We build the behaviour and redesign the work. Then we measure whether it held.
       </p>
       <div class="flex-row hero-cta">
         <a href="/programmes/" class="btn btn-primary">See the programmes</a>
@@ -49,7 +49,7 @@ const posts = (await getCollection('insights', ({ data }) => !data.draft))
             That reframe changes everything downstream. A role stops being a single job
             description and becomes a set of physical, cognitive, and sensory demands — specific,
             visible, and open to redesign. Adjustment stops being an exception granted to an
-            individual and becomes a correction that usually improves the role for everyone in it.
+            individual and becomes a correction that improves the role for everyone in it. And done stops meaning the session delivered. It means the task still works six months later.
           </p>
           <a href="/insights/inclusion-is-an-engineering-standard/" class="link-arrow">
             Read the full insight
@@ -100,7 +100,7 @@ const posts = (await getCollection('insights', ({ data }) => !data.draft))
           <p class="text-muted text-small">
             HR and business leaders have been sold culture change with no way to verify it
             happened. They now ask for evidence before they ask for a proposal — and they are right
-            to.
+            to. We have built the practice around that demand rather than around it.
           </p>
         </div>
       </div>
@@ -115,7 +115,9 @@ const posts = (await getCollection('insights', ({ data }) => !data.draft))
         <h2>Three tiers, calibrated to proximity.</h2>
         <p class="lede">
           Not three programmes stitched together. One behavioural framework, pitched at how close a
-          role sits to the decisions where inclusion is actually determined.
+          role sits to the decisions where inclusion is actually determined. Each tier has an
+          engineering engagement attached. Most organisations start at CARE and add inclusive
+          hiring and onboarding.
         </p>
       </div>
 
@@ -145,18 +147,20 @@ const posts = (await getCollection('insights', ({ data }) => !data.draft))
       <div class="seam-grid">
         <div>
           <span class="eyebrow">How we work</span>
-          <h2>One practitioner. The full causal chain. No handoffs.</h2>
+          <h2>Our team, on your floor, on your call</h2>
           <p class="lede">
-            Discovery, design, co-development, delivery and impact measurement are not handed
-            between departments. One practitioner runs the full arc — because every handoff
-            introduces translation loss, and translation loss is where inclusion programmes
-            quietly fail. The practitioner is supported by infrastructure that absorbs the work
-            a delivery team would otherwise carry.
+            You don't get a report telling you what to fix. We do the fixing. That means sitting
+            with the role as it is actually performed, working out which of its demands are
+            genuinely necessary and which are just how it has always been done, redesigning the
+            ones that are not, and making sure the supervisor knows what changed and why. We call
+            it SEAM&trade;. One role or one team, scoped so the result is obvious to someone who
+            was not in the room.
           </p>
           <p class="lede">
-            That is not an operational footnote. It is why a single practice can deliver at the
-            depth a large organisation expects, and why the proof arrives with the programme
-            rather than a quarter later.
+            Discovery, design, delivery, measurement — you are not coordinating three different external teams or
+            briefing the same context repeatedly. Our team runs all of it, on site,
+            working with your managers rather than around them. Your team keeps doing their job.
+            We do this one.
           </p>
           <a href="/approach/" class="btn btn-outline-light">See the full journey</a>
         </div>
@@ -172,10 +176,11 @@ const posts = (await getCollection('insights', ({ data }) => !data.draft))
     <div class="container">
       <div class="section-head">
         <span class="eyebrow">Showcase</span>
-        <h2>The instruments, not the sales deck.</h2>
+        <h2>The unglamorous end of the work.</h2>
         <p class="lede">
-          Working demonstrations of the diagnostic and measurement tools used in engagements. Each
-          one is the actual artefact, not a description of it.
+          Task audits, process maps, before-and-afters. Slow, specific, hard to put on a slide
+          — and the part that decides whether anything holds. These are the actual instruments.
+          Open one and see what the work looks like.
         </p>
       </div>
 
@@ -223,10 +228,10 @@ const posts = (await getCollection('insights', ({ data }) => !data.draft))
   <!-- CTA -->
   <section class="section-sm cta-band">
     <div class="container cta-inner">
-      <h2>Start with a diagnostic, not a proposal.</h2>
+      <h2>Start with a role, not a rollout.</h2>
       <p class="lede">
-        The first conversation is about where your organisation actually stands. Bring the problem;
-        we will bring the framework.
+        The lowest-risk way in is one role. We audit it, tell you what we found, and you decide
+        whether anything further is worth doing.
       </p>
       <a href="/contact/" class="btn btn-primary">Start a conversation</a>
     </div>

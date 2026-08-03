@@ -24,7 +24,7 @@ export const tiers: Tier[] = [
     audience: 'All employees, regardless of role or seniority',
     expansion: 'Consider · Acknowledge · Respect · Empathy',
     summary:
-      'The cultural foundation. A shared behavioural language that every person in the organisation holds in common — so inclusion stops being a specialist function and starts being everyday conduct.',
+      'A shared behavioural language every person in the organisation holds in common — so inclusion stops being a specialist function and starts being everyday conduct. Where the mismatch shows up before anyone is hired, we redesign the hiring and onboarding itself.',
     why: 'Most organisations already intend to be inclusive. What breaks down is the ordinary interaction: the ambiguous instruction, the meeting that moves too fast, the assumption made about a colleague nobody thought to ask. Awareness training tells people what to know. CARE trains what to do. Without a common baseline, managers are left improvising and inclusion collapses into whoever happens to be good at it.',
     what: 'A behaviour-first workshop built on four observable conduct standards — Consider, Acknowledge, Respect, Empathy — taught through invisible differences, with neurodivergence as the deep teaching case. Participants leave with practised responses, not definitions. The programme moves past awareness to observable conduct, and treats professional standards and team performance as part of the same conversation rather than a competing one.',
     who: [
@@ -66,7 +66,7 @@ export const tiers: Tier[] = [
     tierLabel: 'Tier 2 — People managers',
     audience: 'Managers, supervisors and team leads',
     summary:
-      'Where CARE behaviours become management decisions. The tier that determines whether a shared culture survives contact with performance pressure, resourcing constraints and a difficult conversation on a Tuesday afternoon.',
+      'Where CARE behaviours become management decisions. The tier that determines whether a shared culture survives contact with performance pressure, resourcing constraints and a difficult conversation on a Tuesday afternoon. When the difficulty sits in the work rather than the manager, we take the role apart task by task and rebuild it.',
     why: 'A manager who has never rehearsed the response defaults to silence, over-formality, or an anxious over-correction — none of which count as inclusive conduct, however well-intentioned. Managers hold the decisions that matter most: how work is allocated, how performance is judged, how an adjustment request is received. An organisation-wide baseline without a manager tier leaves the highest-leverage population unequipped.',
     what: 'Scripted, scenario-based capability for the conversations managers actually have. ENGAGE takes the Think / Say / Do method into the management context: what to notice before reacting, what to say in the moment a need surfaces, and what to change in how the work is designed. Emphasis sits on the "Say" layer — because the burden of translation has sat with the neurodivergent employee for too long.',
     who: [
@@ -109,7 +109,7 @@ export const tiers: Tier[] = [
     tierLabel: 'Tier 3 — Senior leadership',
     audience: 'Senior leaders, function heads and executive teams',
     summary:
-      'The conditions leaders set. Policy, resourcing, and permission — the factors that decide whether the behaviours built at Tier 1 and Tier 2 can survive real business pressure, or quietly get overruled by it.',
+      'Not a workshop. An organisation development engagement, where leaders set the direction, resourcing and permission that decide whether Tiers 1 and 2 survive contact with the business. Values belong here — they set what the organisation is aiming at. They cannot specify how a task gets built. ENABLE does both, and leaves behind a maturity baseline and a way to measure movement against it.',
     why: 'Behaviour that costs a manager their delivery target will not hold. Leaders determine whether inclusive conduct is something the organisation resources or something it merely endorses. This is also the tier where regulatory readiness sits: Singapore\'s Workplace Fairness Act and the Enabling Masterplan 2030 both shift the question from voluntary goodwill to organisational obligation.',
     what: 'A leadership-level session on inclusion as an engineering standard rather than a values statement — the fit between task demands and human abilities, addressed at the level of role design, policy and resourcing. Includes the governance view: where accountability sits, what gets measured, and what a defensible position looks like as Singapore\'s regulatory environment tightens.',
     who: [

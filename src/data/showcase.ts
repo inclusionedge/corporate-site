@@ -23,11 +23,11 @@ export const showcase: ShowcaseItem[] = [
   },
   {
     slug: 'seam-map',
-    title: 'The Seam Map',
+    title: 'The SEAM\u2122 Map',
     kind: 'Diagnostic framework',
     stage: 'Discovery',
     summary:
-      'Traces an inclusive hiring process across its custodians and locates the handoffs where intent is lost between them.',
+      'Traces an inclusive hiring process across everyone who touches it, and locates the handoffs where intent is lost between them.',
     problem:
       'Inclusive hiring rarely fails because someone opposed it. It fails at the seam — the handoff between recruiter and hiring manager, between offer and onboarding, between onboarding and the team — where nobody owns the transfer.',
     demoNote:
@@ -39,7 +39,7 @@ export const showcase: ShowcaseItem[] = [
     kind: 'Measurement artefact',
     stage: 'Impact',
     summary:
-      'The one-page before-and-after proof asset produced at the close of every engagement, weighted toward behaviour rather than satisfaction.',
+      'The one-page before-and-after produced at the close of every engagement. Weighted toward what people did, not how they rated the session.',
     problem:
       'Training evaluation usually stops at whether participants enjoyed the session. The Impact Snapshot reports movement in observable behaviour at follow-up, and states plainly what cannot be attributed to the programme.',
     demoNote:
@@ -47,7 +47,7 @@ export const showcase: ShowcaseItem[] = [
   },
   {
     slug: 'care-walkthrough',
-    title: 'CARE Scenario Walkthrough',
+    title: 'CARE\u2122 Scenario Walkthrough',
     kind: 'Learning artefact',
     stage: 'Delivery',
     summary:
