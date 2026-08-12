@@ -98,9 +98,7 @@ export const tiers: Tier[] = [
       'Design task allocation and instruction-giving that reduces avoidable friction',
       'Balance flexibility with performance standards, explicitly rather than intuitively',
     ],
-    status: 'in-build',
-    statusNote:
-      'Framework and architecture confirmed. Full curriculum in active development — we would rather state that plainly than present indicative content as finished depth.',
+    status: 'available',
   },
   {
     id: 'enable',
@@ -141,8 +139,6 @@ export const tiers: Tier[] = [
       'Set measurement that tracks behaviour and outcomes, not sentiment',
       'Understand the direction of Singapore\'s regulatory environment and what readiness requires',
     ],
-    status: 'in-build',
-    statusNote:
-      'Framework and architecture confirmed. Full curriculum in active development.',
+    status: 'available',
   },
 ];
