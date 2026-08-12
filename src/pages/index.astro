@@ -164,8 +164,32 @@ const posts = (await getCollection('insights', ({ data }) => !data.draft))
           </p>
           <a href="/approach/" class="btn btn-outline-light">See the full journey</a>
         </div>
-        <div class="seam-visual">
-          <BrandDevice variant="grid" class="seam-grid-device" />
+        <div class="benefits-panel">
+          <div class="benefit-card">
+            <span class="benefit-tag">Continuity</span>
+            <h3>One framework, every level</h3>
+            <p class="text-small text-muted">
+              CARE, ENGAGE and ENABLE are not separate programmes. They are one behavioural
+              spine at three depths — so every part of the organisation speaks the same
+              language.
+            </p>
+          </div>
+          <div class="benefit-card">
+            <span class="benefit-tag">Efficiency</span>
+            <h3>Your team stays focused</h3>
+            <p class="text-small text-muted">
+              We run discovery, design, delivery and measurement. You run your operation. No
+              briefing three different vendors, no context repeated twice.
+            </p>
+          </div>
+          <div class="benefit-card">
+            <span class="benefit-tag">Certainty</span>
+            <h3>Built for proof</h3>
+            <p class="text-small text-muted">
+              Every engagement starts with a task-level baseline and closes with measured
+              impact. You know what changed because we show the before and after.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -186,7 +210,7 @@ const posts = (await getCollection('insights', ({ data }) => !data.draft))
 
       <div class="grid grid-2 showcase-preview">
         {
-          showcase.slice(0, 4).map((item) => (
+          showcase.filter((item) => item.slug !== 'seam-map').map((item) => (
             <a href={`/showcase/${item.slug}/`} class="showcase-card">
               <span class="badge badge-outline">{item.kind}</span>
               <h3>{item.title}</h3>
@@ -324,16 +348,37 @@ const posts = (await getCollection('insights', ({ data }) => !data.draft))
 
   .seam-grid {
     display: grid;
-    grid-template-columns: 1.3fr 0.7fr;
-    gap: clamp(2rem, 5vw, 5rem);
-    align-items: center;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
   }
   .seam-grid h2 { margin-bottom: 1.25rem; }
   .seam-grid .lede { margin-bottom: 1.15rem; }
   .seam-grid .btn { margin-top: 1rem; }
 
-  .seam-visual { display: flex; justify-content: center; }
-  :global(.seam-grid-device) { width: 100%; max-width: 300px; color: var(--teal); opacity: 0.3; }
+  .benefits-panel { display: grid; gap: 1rem; }
+
+  .benefit-card {
+    background: var(--navy-800);
+    border: 1px solid var(--navy-700);
+    border-left: 3px solid var(--teal);
+    border-radius: var(--radius);
+    padding: 1.35rem 1.5rem;
+  }
+
+  .benefit-tag {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 0.5rem;
+  }
+
+  .benefit-card h3 { font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--white); }
+  .benefit-card p { margin: 0; color: var(--gray-400); }
 
   .showcase-card {
     display: block;
@@ -393,7 +438,6 @@ const posts = (await getCollection('insights', ({ data }) => !data.draft))
     .ladder-item { padding: 2rem 0; border-right: none; }
     .ladder-item + .ladder-item { padding-left: 0; }
     .seam-grid { grid-template-columns: 1fr; }
-    .seam-visual { display: none; }
     .hero :global(.hero-device) { opacity: 0.07; right: -30%; }
   }
 </style>
