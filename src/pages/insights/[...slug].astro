@@ -37,7 +37,7 @@ const articleSchema = {
   type="article"
   publishDate={post.data.pubDate}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} slot="head" is:inline />
 
   <article>
     <header class="article-hero surface-navy">

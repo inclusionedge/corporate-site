@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 449.000 1012.000" width="449.0" height="1012.0" role="img" aria-label="InclusionEdge angled panel device">
+  <title>InclusionEdge angled panel device</title>
+  <!-- Solid form for use as an image mask or section device. Inherits colour via currentColor. One per composition; anchor to an edge; do not rotate. -->
+  <path fill="currentColor" d="M0,199 L449,0 L449,1012 L0,813 Z"/>
+</svg>
